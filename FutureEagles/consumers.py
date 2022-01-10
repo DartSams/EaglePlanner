@@ -1,5 +1,5 @@
 from channels.consumer import SyncConsumer
-from .models import Task
+# from .models import Job
 import json
 
 class EchoConsumer(SyncConsumer):
