@@ -1,0 +1,224 @@
+*{
+    margin:0
+}
+
+/* ==================== CSS Variables =================== */
+:root {
+    --Sidebar_color: #1e90ff;
+    --main_content: #white;
+    --Sidebar_hamburger:black;
+    --Text_size:20px;
+}
+
+#center {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    height: auto; /* important so when creating new task it doesnt go beyond the border */
+    background-color: var(--white);
+    padding:50px;
+    /* width:100px */
+}
+
+#sidebar {
+    position: fixed;
+    width:250px;
+    height: 100%;
+    background-color: var(--Sidebar_color);
+    left:-310px;
+    transition: 1s;
+}
+
+#sidebar #toggle {
+    position: fixed;
+    left:15px;
+    top:10px
+}
+
+/* Make css hamburger */
+#sidebar #toggle span{
+    width:45px;
+    height:5px;
+    background-color: var(--Sidebar_hamburger);
+    display:block;
+    margin-top: 4px;;
+} 
+
+#sidebar #sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top:60px;
+    left:5px;
+    /* height: 30vh; */
+    justify-content: center;
+    align-items: center;
+}
+
+#sidebar #sidebar-buttons button {
+    background: none;
+    border:none;
+    padding:5px;
+    width:55%;
+    margin-bottom: 10px;
+    font-size: var(--Text_size);    
+}
+
+#sidebar #sidebar-buttons button:hover {
+    cursor: pointer;
+    border:3px white solid
+}
+
+#sidebar #sidebar-buttons #profile-div {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    position: fixed;
+    bottom:0;
+    border:3px white solid;
+    border-radius: 5px;
+    padding:5px;
+    /* width:27%; */
+    margin-bottom: 10px;
+}
+
+#sidebar p {
+    font-size: 20px;
+}
+
+#sidebar #sidebar-buttons #profile-div #profile-user {
+    margin-right: 70px;
+}
+
+/* ==================== Task container =================== */
+#column-titles {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:90%;
+    padding: 3px;
+}
+
+
+#list-container {
+    list-style-type:none;
+    border: 3px grey solid;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    width:90vw;
+    padding:0
+}
+
+
+#list-container li {
+    border:3px grey solid;
+    width:90%;
+    height: 40px;
+    margin:10px 0px 10px 0px;
+    padding:5px;
+    font-size: var(--Text_size);
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* align-items: baseline; */
+    /* margin: 30px; */
+}
+
+/* makes edit button */
+#settings-container #settings span {
+    width:8px;
+    height:8px;
+    background-color: var(--Sidebar_hamburger);
+    display:block;
+    margin-top: 4px;
+}
+
+#list-container li #settings-container:hover{
+    border: 2px grey solid;
+    border-radius: 25px;
+    background-color: grey;
+}
+
+/* ==================== Popup container =================== */
+#popup-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top:0;
+    left:0;
+    height: 100vh;
+    width:100vw;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.popup {
+    background-color: white;
+    width: 300px;
+    max-width: 100%;
+    padding:10px 30px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.popup .popup-header {
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+
+.dropdown-content{
+    display: none;
+}
+
+/* #settings-container {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  } */
+  
+#dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+#dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 120px;
+    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+    z-index: 1;
+    /* right:2% */
+}
+
+#sidebar #dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 120px;
+    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+    z-index: 1;
+    /* right:2% */
+    top:0;
+    left:8px
+}
+
+#dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+#dropdown-content a:hover {background-color: #ddd;}
+
+#dropdown:hover #dropdown-content {display: block;}
+  
