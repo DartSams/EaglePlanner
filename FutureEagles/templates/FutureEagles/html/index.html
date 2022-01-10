@@ -27,6 +27,9 @@
         <div id="sidebar-buttons">
             <button id="calendar-switch">Calendar</button>
             <button id="list-switch">List</button>
+            {% if current_user != "" %}
+                <button>{{current_user}}</button>
+            {% endif %}
             <!-- <button>Sign Up</button>
             <button>Login</button> -->
             <button id="google-signin-button"><div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div></button>
@@ -76,13 +79,10 @@
                 <div class="popup-header"><button onclick="closePopup()">X</button></div>
                 <div class="popup-body"><h3>Please describe the task below.</h3></div>
                 <div class="popup-footer">
-                    <!-- <form action="" method="" class="popup-form"> -->
-                        
                     <input type="text" placeholder="Task..." name="task" id="new-task">
                     <input type="date" name="task-date" id="task-date">
                     <br>
                     <button id="submit-task" >Enter</button>
-                    <!-- </form> -->
                 </div>
             </div>
         </div>
@@ -114,7 +114,6 @@
             let sidebarButtons = document.getElementById("sidebar-buttons");
             let profileDiv = document.createElement("div");
             profileDiv.id = "profile-div"
-            // sidebarButtons.append(profileDiv)
 
             let profileUser = document.createElement("p");
             profileUser.innerText = profile.getName();
@@ -160,7 +159,11 @@
             sidebarButtons.append(profileDiv)
 
             const profileData = {
-                "user":profile.getName()
+                "data message":"sign in",
+                "user":profile.getName(),
+                "ID":profile.getId(),
+                "profile image":profile.getImageUrl(),
+                "email":profile.getEmail()
             }
             $.ajax({
                 url:"/",
@@ -177,13 +180,31 @@
         }
 
         function signOut() {
+            const profileData = {
+                "data message":"signing out",
+                "user":""
+            }
+            $.ajax({
+                url:"/",
+                type: "POST",
+                data: profileData,
+                traditional: true,
+                success:function(response){},
+                complete:function(){},
+                error:function (document, textStatus, thrownError){
+                    alert("error");
+                    console.log(profile.getName())
+                }
+            }); //sends js dict to django backend view using ajax call
+
+
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 auth2.disconnect();
                 document.location='http://localhost:8000/';
             });
 
-            document.getElementById("sign-out").remove()
+            document.getElementById("profile-div").remove()
         }
 
 
@@ -196,7 +217,7 @@
 
         let taskButton = document.getElementById("submit-task")
         taskButton.addEventListener("click",function() {
-            sendTaskData()
+            sendTaskData("add new task")
         })
         
     </script>

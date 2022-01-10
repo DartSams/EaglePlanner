@@ -1,5 +1,5 @@
 from channels.consumer import SyncConsumer
-# from .models import Job
+from .models import Job
 import json
 
 class EchoConsumer(SyncConsumer):
@@ -13,7 +13,12 @@ class EchoConsumer(SyncConsumer):
     def websocket_receive(self,event):
         event = event['text'].split(",")
         # print(event)
-        if event[0] == 'change task status': #setup later to change task status between active or non active
+        if event[0] == 'add new task':
+            new_task = Job(user=event[1],task=event[2],due_date=event[3],status="active")
+            new_task.save()
+            print(f"Creating new task: {event}")
+
+        elif event[0] == 'change task status': #setup later to change task status between active or non active
             print(f"changing task status where ID is {event[1]} AND {event[2]}")
             # event['text'] = ""
         elif event[0] == 'delete task': #setup later to delete task
