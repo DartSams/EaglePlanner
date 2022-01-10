@@ -108,11 +108,12 @@ socket.onerror = function(event) {
 
 sendTaskData=function(message) {
     // console.log("tester")
-    user = document.querySelector('#profile-user').innerText
+    user = document.querySelector('.profile-user').innerText
+    user_id = document.querySelector('.profile-user').id
     task=document.querySelector('#new-task').value
     taskDate=document.querySelector('#task-date').value
-    socket.send([message,user,task,taskDate])
-    console.log(message,user,task,taskDate)
+    socket.send([message,user,user_id,task,taskDate])
+    console.log(message,user,user_id,task,taskDate)
 
     closePopup()
     displayNewTask(task,taskDate,num)

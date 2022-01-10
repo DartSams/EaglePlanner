@@ -14,7 +14,7 @@ class EchoConsumer(SyncConsumer):
         event = event['text'].split(",")
         # print(event)
         if event[0] == 'add new task':
-            new_task = Job(user=event[1],task=event[2],due_date=event[3],status="active")
+            new_task = Job(user=event[1],user_id=event[2],task=event[3],due_date=event[4],status="active")
             new_task.save()
             print(f"Creating new task: {event}")
 

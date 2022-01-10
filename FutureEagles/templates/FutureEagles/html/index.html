@@ -117,7 +117,8 @@
 
             let profileUser = document.createElement("p");
             profileUser.innerText = profile.getName();
-            profileUser.id = "profile-user"
+            profileUser.id = profile.getId()
+            profileUser.className = "profile-user"
 
 
             let dropdown = document.createElement("div");
@@ -174,7 +175,7 @@
                 complete:function(){},
                 error:function (document, textStatus, thrownError){
                     alert("error");
-                    console.log(profile.getName())
+                    console.log("error")
                 }
             }); //sends js dict to django backend view using ajax call
         }
@@ -182,7 +183,6 @@
         function signOut() {
             const profileData = {
                 "data message":"signing out",
-                "user":""
             }
             $.ajax({
                 url:"/",
