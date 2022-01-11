@@ -1,5 +1,4 @@
 
-let num = 1 //starts list item counter at 1 else gets list item index from backend using if/else statement
 const dropContentList = {
     "Edit":"edit task",
     "Change status":"change task status",
@@ -7,6 +6,7 @@ const dropContentList = {
 }
 const url = "ws://localhost:8000/ws/FutureEagles/"
 const socket = new WebSocket(url);
+
 
 
 function showMobileNav() {
@@ -116,13 +116,12 @@ sendTaskData=function(message) {
     // console.log(message,user,user_id,task,taskDate)
 
     closePopup()
-    displayNewTask(task,taskDate,num)
-    num++
+    displayNewTask(task,taskDate)
 }
 
 testSocket = function(data){
     socket.send(data)
-}
+} //sends data to consumer.py for db queries
 
 function displayNewTask(task,taskDate) {
     let ul = document.querySelector("#list-container")

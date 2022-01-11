@@ -10,9 +10,6 @@ def index(request):
         data={
             "current_user":request.session["logged-in-user"],
         }
-        # test_task = Job(user="dart",task="sleep",due_date="tonight",status="non active")
-        # test_task.save()
-        # print(request.session["logged-in-user-id"])
         try:
             j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"])
             for task_entry in j:
@@ -39,7 +36,7 @@ def index(request):
             profile_image = request.POST.get("profile image")
             profile_email = request.POST.get("email")
             user = Google_user(profile_name=profile,user_id=profile_id,user_image=profile_image,user_email=profile_email)
-            user.save()
+            # user.save()
             # print(f"User: {user}")
             request.session["logged-in-user"] = profile
             request.session["logged-in-user-id"] = profile_id
@@ -50,11 +47,10 @@ def index(request):
             request.session["logged-in-user-id"] = ""
             print(f"signing out")
 
-        # else:
-        #     print(request.POST)
 
         return redirect("index")
 
 
 #TODO
     #check consumers.py file
+    #in index's post request when sign in add extra layer so its not filling database everytime user signs in
