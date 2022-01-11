@@ -187,9 +187,9 @@
                 success:function(response){
                     let taskList = document.getElementsByTagName("li")
                     // console.log(taskList)
-                    if (taskList.length === 0) {
-                        window.location.reload()
-                    } //reloads the page when signing in IMPORTANT if removed when there will be no get request to fetch the task from db
+                    // if (taskList.length === 0) {
+                    //     window.location.reload()
+                    // } //reloads the page when signing in IMPORTANT if removed when there will be no get request to fetch the task from db
                 },
                 complete:function(){},
                 error:function (document, textStatus, thrownError){
