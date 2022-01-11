@@ -87,5 +87,4 @@ def index(request):
 
 
 #TODO
-    #check consumers.py file
-    #fix reload loop when signing in
+    #now to start on notes app

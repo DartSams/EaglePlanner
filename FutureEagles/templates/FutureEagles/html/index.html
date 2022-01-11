@@ -27,6 +27,7 @@
         <div id="sidebar-buttons">
             <button id="calendar-switch">Calendar</button>
             <button id="list-switch">List</button>
+            <button id="notes-switch">Notes</button>
             <button id="google-signin-button" ><div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div></button>
             
         </div>
@@ -82,7 +83,7 @@
                                 </div>
                                 <div id="dropdown-content">
                                     <a onclick="testSocket(id)" id="edit task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Edit</a>
-                                    <a onclick="testSocket(id)" id="change task status,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Change status</a>
+                                    <!-- <a onclick="testSocket(id)" id="change task status,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Change status</a> -->
                                     <a onclick="testSocket(id)" id="delete task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Delete</a>
                                 </div>
                             </div>

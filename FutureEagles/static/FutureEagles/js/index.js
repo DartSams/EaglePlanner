@@ -1,7 +1,7 @@
 
 const dropContentList = {
     "Edit":"edit task",
-    "Change status":"change task status",
+    // "Change status":"change task status",
     "Delete":"delete task"
 }
 const url = "ws://localhost:8000/ws/FutureEagles/"
@@ -54,15 +54,13 @@ function openPopup (container) {
 function closePopup (container) {
     // console.log(container)
     container.style.display = "none"
-    container.remove()
+    if (container.className == "popup-to-delete") {
+        container.remove()
+    } // important to stop creating many popup containers will delete edit popup container from html
 } //closes popup conainer recieved from function parameter
 
 
 
-
-
-// const url = "ws://localhost:8000/ws/FutureEagles/"
-// const socket = new WebSocket(url);
 
 // socket.onopen = function(event) {
 //     console.log("sockets started")
@@ -98,13 +96,14 @@ socket.onclose = function(event) {
 
 sendTaskData=function(message) {
     // console.log("tester")
+    let popupContainer = document.querySelector("#popup-container")
     user = document.querySelector('.profile-user').innerText
     user_id = document.querySelector('.profile-user').id
     task=document.querySelector('#new-task').value
     taskDate=document.querySelector('#task-date').value
     socket.send([message,user,user_id,task,taskDate])
     // console.log(message,user,user_id,task,taskDate)
-    closePopup()
+    closePopup(popupContainer)
     displayNewTask(task,taskDate)
 }
 
@@ -199,6 +198,7 @@ function editTaskPopup(data) {
 
     let popupContainer = document.createElement("div");;
     popupContainer.id = "popup-container"
+    popupContainer.className = "popup-to-delete"
 
     let popup = document.createElement("div")
     popup.className = "popup"
@@ -256,7 +256,7 @@ function editTaskPopup(data) {
     saveButton.innerHTML = "Save"
     saveButton.addEventListener("click",function() {
         saveData(splitPrevData)
-        closePopup()
+        closePopup(popupContainer)
     })
 
     

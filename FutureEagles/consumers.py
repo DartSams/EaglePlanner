@@ -18,10 +18,6 @@ class EchoConsumer(SyncConsumer):
             new_task.save()
             print(f"***Creating new task: {event}***")
 
-        elif event[0] == 'change task status': #setup later to change task status between active or non active
-            print(f"***changing task status where task is {event[1]} by {event[2]}***")
-            # event['text'] = ""
-
         elif event[0] == 'delete task': #setup later to delete task
             try:
                 task=Job.objects.filter(task=event[1],user_id=event[5],due_date=event[2],status=event[3])
@@ -32,6 +28,9 @@ class EchoConsumer(SyncConsumer):
 
         elif event[0] == 'finished editing': #edits the current task
             print(event)
+            task = Job.objects.filter(user=event[4],user_id=event[5],task=event[1],due_date=event[2],status=event[3])
+            task.update(user=event[9],user_id=event[10],task=event[6],due_date=event[7],status=event[8])
+            #task.update is faster because it performs 1 query and auomatically saves update https://stackoverflow.com/questions/2712682/how-to-select-a-record-and-update-it-with-a-single-queryset-in-django
             # print(f"***editing task where task is {event[1]} by {event[2]}***")
 
         # else:
