@@ -74,19 +74,19 @@ function signOut() {
 // const url = "ws://localhost:8000/ws/FutureEagles/"
 // const socket = new WebSocket(url);
 
-socket.onopen = function(event) {
-    console.log("sockets started")
-    console.log('connection is open')
-    console.log(event)
-    // socket.send('Thanks for connecting')
+// socket.onopen = function(event) {
+//     console.log("sockets started")
+//     console.log('connection is open')
+//     console.log(event)
+//     socket.send('Thanks for connecting')
 
-    // for(let i=0;i<=2;i++){
-    //     displayNewTask("sleep","now")
-    // } //test the limits of creating task using js dom using automatic data of 100 task
+//     for(let i=0;i<=2;i++){
+//         displayNewTask("sleep","now")
+//     } //test the limits of creating task using js dom using automatic data of 100 task
 
-    // socket.send("change task status")
+//     socket.send("change task status")
 
-} //when page first opens
+// } //when page first opens
 
 socket.onmessage = function(event) {
     console.log('message is recieved')
@@ -94,16 +94,16 @@ socket.onmessage = function(event) {
     // getMe(event['data'])
     // up(event['data'])
     data = event['data']
-    console.log(data)
+    // console.log(data)
 } //when server sends data to frontend
 
 socket.onclose = function(event) {
     console.log('connection is closed')
 } //
 
-socket.onerror = function(event) {
-    console.log(event)
-}
+// socket.onerror = function(event) {
+//     console.log(event)
+// }
 
 
 sendTaskData=function(message) {
@@ -113,7 +113,7 @@ sendTaskData=function(message) {
     task=document.querySelector('#new-task').value
     taskDate=document.querySelector('#task-date').value
     socket.send([message,user,user_id,task,taskDate])
-    console.log(message,user,user_id,task,taskDate)
+    // console.log(message,user,user_id,task,taskDate)
 
     closePopup()
     displayNewTask(task,taskDate,num)
@@ -127,7 +127,7 @@ testSocket = function(data){
 function displayNewTask(task,taskDate) {
     let ul = document.querySelector("#list-container")
     let li = document.createElement("li");
-    li.id=num //sets the current list item to the index
+    li.id=task //sets the current list item to the index
 
     let taskDiv = document.createElement("div");
     taskDiv.id = "task"
@@ -173,7 +173,7 @@ function displayNewTask(task,taskDate) {
     for (const key in dropContentList) {
         let dropdownLink = document.createElement("a");
         dropdownLink.innerText = key
-        dropdownLink.id = `${dropContentList[dropdownLink.innerText]},${li.id},${task}` //sets dropdown item element id to object key and gets the current list item index
+        dropdownLink.id = `${dropContentList[dropdownLink.innerText]},${task}` //sets dropdown item element id to object key and gets the current list item index
         // dropdownLink.id = JSON.stringify({
         //     "backend task":dropContentList[dropdownLink.innerText],
         //     "task id":li.id,

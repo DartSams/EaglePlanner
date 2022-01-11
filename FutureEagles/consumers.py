@@ -16,16 +16,16 @@ class EchoConsumer(SyncConsumer):
         if event[0] == 'add new task':
             new_task = Job(user=event[1],user_id=event[2],task=event[3],due_date=event[4],status="active")
             new_task.save()
-            print(f"Creating new task: {event}")
+            print(f"***Creating new task: {event}***")
 
         elif event[0] == 'change task status': #setup later to change task status between active or non active
-            print(f"changing task status where ID is {event[1]} AND {event[2]}")
+            print(f"***changing task status where task is {event[1]} by {event[2]}***")
             # event['text'] = ""
         elif event[0] == 'delete task': #setup later to delete task
-            print(f"deleting task where ID is {event[1]} AND {event[2]}")
+            print(f"***deleting task where task is {event[1]} by {event[2]}***")
 
         elif event[0] == 'edit task': #edits the current task
-            print(f"editing task where ID is {event[1]} AND {event[2]}")
+            print(f"***editing task where task is {event[1]} by {event[2]}***")
 
         else:
             print(event)

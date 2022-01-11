@@ -7,6 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def index(request):
     if request.method == "GET":
+        data={
+            "current_user":request.session["logged-in-user"],
+        }
         # test_task = Job(user="dart",task="sleep",due_date="tonight",status="non active")
         # test_task.save()
         # print(request.session["logged-in-user-id"])
@@ -21,14 +24,10 @@ def index(request):
                     "due date":task_entry.due_date,
                     "status":task_entry.status
                 }
-                print(f"Entry: {user_data}")
+            data["user_task"] = j
         except:
             print(f"task not found by {request.session['logged-in-user']}")
 
-        data={
-            "current_user":request.session["logged-in-user"]
-        }
-        # print(data["current_user"])
         return render(request,"FutureEagles/html/index.html",data)
 
     else:
@@ -51,8 +50,8 @@ def index(request):
             request.session["logged-in-user-id"] = ""
             print(f"signing out")
 
-        else:
-            print(request.POST)
+        # else:
+        #     print(request.POST)
 
         return redirect("index")
 
