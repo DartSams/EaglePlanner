@@ -21,14 +21,21 @@ class EchoConsumer(SyncConsumer):
         elif event[0] == 'change task status': #setup later to change task status between active or non active
             print(f"***changing task status where task is {event[1]} by {event[2]}***")
             # event['text'] = ""
+
         elif event[0] == 'delete task': #setup later to delete task
-            print(f"***deleting task where task is {event[1]} by {event[2]}***")
+            try:
+                task=Job.objects.filter(task=event[1],user_id=event[5],due_date=event[2],status=event[3])
+                task.delete()
+                print(f"***deleting task where task is {event[1]} by {event[2]}***")
+            except:
+                print("delete failed")
 
-        elif event[0] == 'edit task': #edits the current task
-            print(f"***editing task where task is {event[1]} by {event[2]}***")
-
-        else:
+        elif event[0] == 'finished editing': #edits the current task
             print(event)
+            # print(f"***editing task where task is {event[1]} by {event[2]}***")
+
+        # else:
+        #     print(event)
             # event=event['text'].split(",")
             # task=event[0]
             # date=event[1]

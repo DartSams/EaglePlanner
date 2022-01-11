@@ -81,9 +81,9 @@
                                     </div>
                                 </div>
                                 <div id="dropdown-content">
-                                    <a onclick="testSocket(id)" id="edit task,{{i.task}},{{current_user}}">Edit</a>
-                                    <a onclick="testSocket(id)" id="change task status,{{i.task}},{{current_user}}">Change status</a>
-                                    <a onclick="testSocket(id)" id="delete task,{{i.task}},{{current_user}}">Delete</a>
+                                    <a onclick="testSocket(id)" id="edit task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Edit</a>
+                                    <a onclick="testSocket(id)" id="change task status,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Change status</a>
+                                    <a onclick="testSocket(id)" id="delete task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Delete</a>
                                 </div>
                             </div>
                         </li>
@@ -93,7 +93,7 @@
             </ul>
         <div id="popup-container">
             <div class="popup">
-                <div class="popup-header"><button onclick="closePopup()">X</button></div>
+                <div class="popup-header"><button>X</button></div>
                 <div class="popup-body"><h3>Please describe the task below.</h3></div>
                 <div class="popup-footer">
                     <input type="text" placeholder="Task..." name="task" id="new-task">
@@ -233,14 +233,20 @@
         let createTask = document.getElementById("create-task");
         createTask.addEventListener("click",function() {
             // testSocket()
-            openPopup()
+            let popupContainer = document.querySelector("#popup-container")
+            openPopup(popupContainer)
         })
 
         let taskButton = document.getElementById("submit-task")
         taskButton.addEventListener("click",function() {
             sendTaskData("add new task")
         })
-        
+
+        let closePopupButton = document.querySelector(".popup-header").children[0]
+        closePopupButton.addEventListener("click",function() {
+            let popupContainer = document.querySelector("#popup-container")
+            closePopup(popupContainer)
+        })
 
     </script>
 </footer>
