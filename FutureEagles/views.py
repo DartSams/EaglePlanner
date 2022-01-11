@@ -28,7 +28,7 @@ def index(request):
         return render(request,"FutureEagles/html/index.html",data)
 
     else:
-        print(request.POST)
+        # print(request.POST)
         data_message = request.POST.get("data message")
         profile = request.POST.get("user")
         profile_id = request.POST.get("ID")
@@ -39,19 +39,23 @@ def index(request):
 
         try: #first if data from ajax call matches query above then will login user in
             print(f"User found {existing_user[0].profile_name}")
+            print(f"{existing_user[0].profile_name} signing in")
             if existing_user[0]:
                 request.session["logged-in-user"] = existing_user[0].profile_name
                 request.session["logged-in-user-id"] = existing_user[0].user_id
 
         except: #if data from ajax call doesnt match query then will either sign user out of create new user
-            print(f"User not found")
             if data_message == "signing out": #if data message in post request says signing out the user will be signed out
                 request.session["logged-in-user"] = ""
                 request.session["logged-in-user-id"] = ""
                 print(f"signing out")
             else: #if data message doesnt say signing out and data from ajax call doesnt match query above this will create new user 
+                print(f"User not found creating new user")
                 user = Google_user(profile_name=profile,user_id=profile_id,user_image=profile_image,user_email=profile_email)
                 user.save()
+
+                new_task = Job(user=profile,user_id=profile_id,task="default",due_date="today",status="active")
+                new_task.save()
 
         # if data_message == "sign in":
         #     profile = request.POST.get("user")

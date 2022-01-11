@@ -66,25 +66,28 @@
                 </li> -->
  
                 {% for i in user_task %}
-                    <li id="{{i.task}}">
-                        <div id="task">{{i.task}}</div>
-                        <div id="end-date">{{i.due_date}}</div>
-                        <div id="status">{{i.status}}</div>
-                        <div id="dropdown">
-                            <div id="settings-container">
-                                <div id="settings">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
+                    {% if "default" == i.task %}
+                    {% else %}
+                        <li id="{{i.task}}">
+                            <div id="task">{{i.task}}</div>
+                            <div id="end-date">{{i.due_date}}</div>
+                            <div id="status">{{i.status}}</div>
+                            <div id="dropdown">
+                                <div id="settings-container">
+                                    <div id="settings">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div id="dropdown-content">
+                                    <a onclick="testSocket(id)" id="edit task,{{i.task}},{{current_user}}">Edit</a>
+                                    <a onclick="testSocket(id)" id="change task status,{{i.task}},{{current_user}}">Change status</a>
+                                    <a onclick="testSocket(id)" id="delete task,{{i.task}},{{current_user}}">Delete</a>
                                 </div>
                             </div>
-                            <div id="dropdown-content">
-                                <a onclick="testSocket(id)" id="edit task,{{i.task}},{{current_user}}">Edit</a>
-                                <a onclick="testSocket(id)" id="change task status,{{i.task}},{{current_user}}">Change status</a>
-                                <a onclick="testSocket(id)" id="delete task,{{i.task}},{{current_user}}">Delete</a>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    {% endif %}
                 {% endfor %}
 
             </ul>
@@ -185,11 +188,11 @@
                 data: profileData,
                 traditional: true,
                 success:function(response){
-                    let taskList = document.getElementsByTagName("li")
+                    let taskList = "{{user_task|safe}}"
                     // console.log(taskList)
-                    // if (taskList.length === 0) {
-                    //     window.location.reload()
-                    // } //reloads the page when signing in IMPORTANT if removed when there will be no get request to fetch the task from db
+                    if ("<QuerySet []>" == taskList) {
+                        window.location.reload()
+                    } //reloads the page when signing in IMPORTANT if removed when there will be no get request to fetch the task from db
                 },
                 complete:function(){},
                 error:function (document, textStatus, thrownError){
