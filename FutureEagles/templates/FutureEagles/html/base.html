@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'FutureEagles/css/index.css' %}">
-    <script src="{% static 'FutureEagles/js/index.js' %}"></script>
+    <script src="{% static 'FutureEagles/js/task.js' %}"></script>
     <title>Home</title>
 
     <meta name="google-signin-scope" content="profile email">
@@ -17,74 +17,21 @@
 
 </head>
 <body>
-    <!-- <div id="sidebar">
-        <div id="toggle" onclick="showMobileNav()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
 
-        <div id="sidebar-buttons">
-            <button id="calendar-switch">Calendar</button>
-            <button id="list-switch">List</button>
-            <button id="notes-switch">Notes</button>
-            <button id="google-signin-button" ><div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div></button>
-            
-        </div>
-    </div> -->
     {% block sidebar %}
     {% endblock %}
 
     <div id="center">
-        <!-- <ul id="list-container">
-            <button id="create-task">Create new Task</button>
-            <div id="column-titles">
-                <p>Task</p>
-                <p>Due Date</p>
-                <p>Status</p>
-                <p>Edit</p>
-            </div>
+        {% if current_user %}
+            {% block task_container %}
+            {% endblock %}
 
-            {% for i in user_task %}
-                {% if "default" == i.task %}
-                {% else %}
-                    <li id="{{i.task}}">
-                        <div id="task">{{i.task}}</div>
-                        <div id="end-date">{{i.due_date}}</div>
-                        <div id="status">{{i.status}}</div>
-                        <div id="dropdown">
-                            <div id="settings-container">
-                                <div id="settings">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                            <div id="dropdown-content">
-                                <a onclick="testSocket(id)" id="edit task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Edit</a>
-                                <a onclick="testSocket(id)" id="delete task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Delete</a>
-                            </div>
-                        </div>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul> -->
-        {% block task_container %}
-        {% endblock %}
-        <!-- <div id="popup-container">
-            <div class="popup">
-                <div class="popup-header"><button>X</button></div>
-                <div class="popup-body"><h3>Please describe the task below.</h3></div>
-                <div class="popup-footer">
-                    <input type="text" placeholder="Task..." name="task" id="new-task">
-                    <input type="date" name="task-date" id="task-date">
-                    <br>
-                    <button id="submit-task" >Enter</button>
-                </div>
-            </div>
-        </div> -->
-        {% block popup_create_task %}
-        {% endblock %}
+        {% else %}
+            <p>Please Sign in</p>
+
+        {% endif%}
+
+
     </div>
 
 
