@@ -33,23 +33,9 @@ class EchoConsumer(SyncConsumer):
             #task.update is faster because it performs 1 query and auomatically saves update https://stackoverflow.com/questions/2712682/how-to-select-a-record-and-update-it-with-a-single-queryset-in-django
             # print(f"***editing task where task is {event[1]} by {event[2]}***")
 
-        # else:
-        #     print(event)
-            # event=event['text'].split(",")
-            # task=event[0]
-            # date=event[1]
-            # a=Task(user="dart",task=task,due_date=date,status="active")
-            # a.save()
-            # print(f"Event: {event}")
-
-            # task_data={
-            #     'name':a.user,
-            #     'task':a.task,
-            # }
-            # self.send({
-            #     'type':'websocket.send',
-            #     'text':json.dumps(task_data)
-            # }) #sends data to js frontend in socket.onmessage function
+        elif event[0] == 'add new note':
+            print(event)
+            print(f"***Creating new note: {event}***")
 
     def websocket_disconnect(self,event):
         print("connection is disconnected")

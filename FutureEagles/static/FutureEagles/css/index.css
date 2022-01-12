@@ -156,7 +156,7 @@
 
 .popup {
     background-color: white;
-    width: 300px;
+    /* width: 300px; */
     max-width: 100%;
     padding:10px 30px;
     border-radius: 5px;
@@ -170,8 +170,7 @@
 }
 
 
-
-
+/* ==================== dropdown container =================== */
 .dropdown-content{
     display: none;
 }
@@ -199,6 +198,7 @@
     /* right:2% */
 }
 
+/* ==================== profile sidebar container =================== */
 #sidebar #dropdown-content {
     display: none;
     position: absolute;
@@ -222,3 +222,32 @@
 
 #dropdown:hover #dropdown-content {display: block;}
   
+
+/* ****************** Notes Section ************************* */
+#notes-container {
+    display: flex;
+    flex-direction: column;
+    width:100vw;
+    height:100vh;
+}
+
+#notes-container #notes-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#notes-container #notes-list .note {
+    height: 200px;
+    width: 200px;
+    /* background-color: #555; */
+    color:black;
+    margin:10px 5px 10px 5px;
+}
+
+textarea{
+    width:70vw;
+    height:60vh
+}

@@ -46,9 +46,19 @@ function showMobileNav() {
 }
 
 
-function openPopup (container) {
+function openPopup (container,popup) {
     // console.log(container)
+    // console.log(popup)
     container.style.display = "flex"
+    if (popup.id == "list-popup") {
+        popup.style.cssText = `
+            width:300px
+        `
+    } else if (popup.id == "note-popup") {
+        popup.style.cssText = `
+            width:80%
+        `
+    }
 } //opens popup conainer recieved from function parameter
 
 function closePopup (container) {
@@ -62,19 +72,20 @@ function closePopup (container) {
 
 
 
-// socket.onopen = function(event) {
-//     console.log("sockets started")
-//     console.log('connection is open')
-//     console.log(event)
-//     socket.send('Thanks for connecting')
+socket.onopen = function(event) {
+    console.log("sockets started")
+    console.log('connection is open')
+    console.log(event)
+    socket.send('Thanks for connecting')
 
-//     for(let i=0;i<=2;i++){
-//         displayNewTask("sleep","now")
-//     } //test the limits of creating task using js dom using automatic data of 100 task
+    for(let i=0;i<=100;i++){
+        displayNewNote("sleep")
+        // displayNewTask("sleep","now")
+    } //test the limits of creating task using js dom using automatic data of 100 task
 
-//     socket.send("change task status")
+    // socket.send("change task status")
 
-// } //when page first opens
+} //when page first opens
 
 socket.onmessage = function(event) {
     console.log('message is recieved')
@@ -97,14 +108,21 @@ socket.onclose = function(event) {
 sendTaskData=function(message) {
     // console.log("tester")
     let popupContainer = document.querySelector("#popup-container")
-    user = document.querySelector('.profile-user').innerText
-    user_id = document.querySelector('.profile-user').id
-    task=document.querySelector('#new-task').value
-    taskDate=document.querySelector('#task-date').value
-    socket.send([message,user,user_id,task,taskDate])
-    // console.log(message,user,user_id,task,taskDate)
-    closePopup(popupContainer)
-    displayNewTask(task,taskDate)
+    if (message == "add new task") {
+        user = document.querySelector('.profile-user').innerText
+        user_id = document.querySelector('.profile-user').id
+        task=document.querySelector('#new-task').value
+        taskDate=document.querySelector('#task-date').value
+        socket.send([message,user,user_id,task,taskDate])
+        // console.log(message,user,user_id,task,taskDate)
+        closePopup(popupContainer)
+        displayNewTask(task,taskDate)
+    } else if (message == "add new note") {
+        let note = document.querySelector("#new-note").value;
+        socket.send([message,note])
+        closePopup(popupContainer)
+        displayNewNote(note)
+    }
 }
 
 testSocket = function(data){
@@ -306,3 +324,21 @@ function saveData(splitPrevData) {
 
     testSocket(`finished editing,${splitPrevData},${newData}`)
 } //sends data to testSocket function with data message of finished editing so it will send data to consumer.py file for db query to change task entry
+
+
+function displayNewNote(note) {
+    var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
+
+    let notesList = document.querySelector("#notes-list")
+    let noteItem = document.createElement("li");
+    noteItem.className = "note"
+    noteItem.style.cssText = `
+        background-color:#${randomColor}
+    `
+    // noteItem.style.backgroundColor = "red"
+    let preText = document.createElement("pre");
+    preText.innerText = note
+
+    noteItem.append(preText)
+    notesList.append(noteItem)
+} //creates new notes list item with a random background color

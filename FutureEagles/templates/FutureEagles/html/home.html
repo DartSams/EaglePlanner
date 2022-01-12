@@ -77,7 +77,7 @@
     </ul>
 
     <div id="popup-container">
-        <div class="popup">
+        <div class="popup" id="list-popup">
             <div class="popup-header"><button>X</button></div>
             <div class="popup-body"><h3>Please describe the task below.</h3></div>
             <div class="popup-footer">
@@ -100,6 +100,29 @@
                 <input type="date" name="task-date" id="task-date">
                 <br>
                 <button id="submit-task" >Enter</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block notes_container %}
+    <div id="notes-container">
+        <button id="create-note">Create Note</button>
+        <ul id="notes-list">
+            <li class="note">
+                <p>Test</p>
+            </li>
+        </ul>
+
+        <div id="popup-container">
+            <div class="popup" id="note-popup">
+                <div class="popup-header"><button>X</button></div>
+                <div class="popup-body"><h3>Please describe the task below.</h3></div>
+                <div class="popup-footer">
+                    <textarea name="new-note" id="new-note" cols="30" rows="10"></textarea>
+                    <br>
+                    <button id="submit-note" >Enter</button>
+                </div>
             </div>
         </div>
     </div>

@@ -26,8 +26,11 @@
             {% block task_container %}
             {% endblock %}
 
+
+
         {% else %}
-            <p>Please Sign in</p>
+            {% block notes_container %}
+            {% endblock %}
 
         {% endif%}
 
@@ -160,23 +163,40 @@
 
 
         let createTask = document.getElementById("create-task");
-        createTask.addEventListener("click",function() {
-            // testSocket()
+        if (createTask) {
             let popupContainer = document.querySelector("#popup-container")
-            openPopup(popupContainer)
-        })
+            createTask.addEventListener("click",function() {
+                let popup = popupContainer.children[0]
+                openPopup(popupContainer,popup)
+            })
 
-        let taskButton = document.getElementById("submit-task")
-        taskButton.addEventListener("click",function() {
-            sendTaskData("add new task")
-        })
+            let taskButton = document.getElementById("submit-task")
+            taskButton.addEventListener("click",function() {
+                sendTaskData("add new task")
+            })
+        } //creates popup for task
+        
+        let createNote = document.querySelector("#create-note");
+        if (createNote) {
+            let popupContainer = document.querySelector("#popup-container")
+            createNote.addEventListener("click",function() {
+                let popup = popupContainer.children[0]
+                openPopup(popupContainer,popup)
+            })
 
+            let notesButton = document.getElementById("submit-note")
+            notesButton.addEventListener("click",function() {
+                sendTaskData("add new note")
+                // displayNewNotes("cum")
+                // closePopup(popupContainer)
+            })
+        } //create popup for notes
+        
         let closePopupButton = document.querySelector(".popup-header").children[0]
         closePopupButton.addEventListener("click",function() {
             let popupContainer = document.querySelector("#popup-container")
             closePopup(popupContainer)
-        })
-
+        }) //closes popup
     </script>
 </footer>
 </html>
