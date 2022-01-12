@@ -1,0 +1,18 @@
+{% extends 'FutureEagles/html/base.html' %}
+
+{% block sidebar %}
+    <div id="sidebar">
+        <div id="toggle" onclick="showMobileNav()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div id="sidebar-buttons">
+            <button id="calendar-switch">Calendar</button>
+            <button id="list-switch">List</button>
+            <button id="notes-switch">Notes</button>
+            <button id="google-signin-button" ><div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div></button>
+        </div>
+    </div>
+{% endblock %}

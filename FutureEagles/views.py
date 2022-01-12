@@ -25,7 +25,7 @@ def index(request):
         except:
             print(f"task not found by {request.session['logged-in-user']}")
 
-        return render(request,"FutureEagles/html/index.html",data)
+        return render(request,"FutureEagles/html/home.html",data)
 
     else:
         # print(request.POST)
