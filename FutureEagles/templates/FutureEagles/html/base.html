@@ -36,65 +36,42 @@
     {% endblock %}
 
     <div id="center">
-        <!-- <button id="create-task">Create new Task</button> -->
-        <!-- <p>Centered div</p> -->
-            <ul id="list-container">
-                <button id="create-task">Create new Task</button>
-                <div id="column-titles">
-                    <p>Task</p>
-                    <p>Due Date</p>
-                    <p>Status</p>
-                    <p>Edit</p>
-                </div>
+        <!-- <ul id="list-container">
+            <button id="create-task">Create new Task</button>
+            <div id="column-titles">
+                <p>Task</p>
+                <p>Due Date</p>
+                <p>Status</p>
+                <p>Edit</p>
+            </div>
 
-                
-                <!-- <li>
-                    <div id="task">sleep</div>
-                    <div id="end-date">5min</div>
-                    <div id="status">X</div>
-                    <div id="dropdown">
-                        <div id="settings-container">
-                            <div id="settings">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                        <div id="dropdown-content">
-                            <a href="">test 1</a>
-                            <a href="">test 2</a>
-                            <a href="">test 3</a>
-                        </div>
-                    </div>
-                </li> -->
- 
-                {% for i in user_task %}
-                    {% if "default" == i.task %}
-                    {% else %}
-                        <li id="{{i.task}}">
-                            <div id="task">{{i.task}}</div>
-                            <div id="end-date">{{i.due_date}}</div>
-                            <div id="status">{{i.status}}</div>
-                            <div id="dropdown">
-                                <div id="settings-container">
-                                    <div id="settings">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                </div>
-                                <div id="dropdown-content">
-                                    <a onclick="testSocket(id)" id="edit task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Edit</a>
-                                    <!-- <a onclick="testSocket(id)" id="change task status,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Change status</a> -->
-                                    <a onclick="testSocket(id)" id="delete task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Delete</a>
+            {% for i in user_task %}
+                {% if "default" == i.task %}
+                {% else %}
+                    <li id="{{i.task}}">
+                        <div id="task">{{i.task}}</div>
+                        <div id="end-date">{{i.due_date}}</div>
+                        <div id="status">{{i.status}}</div>
+                        <div id="dropdown">
+                            <div id="settings-container">
+                                <div id="settings">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
                                 </div>
                             </div>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-
-            </ul>
-        <div id="popup-container">
+                            <div id="dropdown-content">
+                                <a onclick="testSocket(id)" id="edit task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Edit</a>
+                                <a onclick="testSocket(id)" id="delete task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Delete</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul> -->
+        {% block task_container %}
+        {% endblock %}
+        <!-- <div id="popup-container">
             <div class="popup">
                 <div class="popup-header"><button>X</button></div>
                 <div class="popup-body"><h3>Please describe the task below.</h3></div>
@@ -105,7 +82,9 @@
                     <button id="submit-task" >Enter</button>
                 </div>
             </div>
-        </div>
+        </div> -->
+        {% block popup_create_task %}
+        {% endblock %}
     </div>
 
 
