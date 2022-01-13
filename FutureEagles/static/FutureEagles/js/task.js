@@ -50,7 +50,7 @@ function openPopup (container,popup) {
     // console.log(container)
     // console.log(popup)
     container.style.display = "flex"
-    if (popup.id == "list-popup") {
+    if (popup.id == "list-popup" || container.className == "popup-to-delete") {
         popup.style.cssText = `
             width:300px
         `
@@ -59,6 +59,7 @@ function openPopup (container,popup) {
             width:80%
         `
     }
+    
 } //opens popup conainer recieved from function parameter
 
 function closePopup (container) {
@@ -79,12 +80,9 @@ socket.onopen = function(event) {
     socket.send('Thanks for connecting')
 
     for(let i=0;i<=100;i++){
-        displayNewNote("sleep")
-        // displayNewTask("sleep","now")
-    } //test the limits of creating task using js dom using automatic data of 100 task
-
-    // socket.send("change task status")
-
+        displayNewNote("lorem ipsum") //test the limits of creating notes using js dom using automatic data of 100 notes
+        // displayNewTask("sleep","now") //test the limits of creating task using js dom using automatic data of 100 task
+    } 
 } //when page first opens
 
 socket.onmessage = function(event) {
@@ -300,7 +298,7 @@ function editTaskPopup(data) {
     popupContainer.append(popup)
     centerDiv.append(popupContainer)
 
-    openPopup(popupContainer)
+    openPopup(popupContainer,popup)
 } //creates a new popup div to edit currently selected task
 
 function saveData(splitPrevData) {
@@ -323,6 +321,8 @@ function saveData(splitPrevData) {
     const newData = `${newDataJSON["task"]},${newDataJSON["due date"]},${selectedSize},${splitPrevData[3]},${splitPrevData[4]}`
 
     testSocket(`finished editing,${splitPrevData},${newData}`)
+    document.querySelector("#new-task-input").value = ""
+    document.querySelector("#task-date-input").value = ""
 } //sends data to testSocket function with data message of finished editing so it will send data to consumer.py file for db query to change task entry
 
 
@@ -340,5 +340,6 @@ function displayNewNote(note) {
     preText.innerText = note
 
     noteItem.append(preText)
-    notesList.append(noteItem)
+    notesList.prepend(noteItem)
+    document.querySelector("#new-note").value = ""
 } //creates new notes list item with a random background color
