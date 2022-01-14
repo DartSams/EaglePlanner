@@ -123,9 +123,10 @@ sendTaskData=function(message) {
         displayNewTask(task,taskDate)
     } else if (message == "add new note") {
         let note = document.querySelector("#new-note").value;
-        socket.send([message,user,user_id,note])
+        let noteTag = document.querySelector("#new-note-tag").value
+        socket.send([message,user,user_id,note,noteTag])
         closePopup(popupContainer)
-        displayNewNote(note)
+        displayNewNote(note,noteTag)
     }
 }
 
@@ -332,12 +333,12 @@ function saveData(splitPrevData) {
 } //sends data to testSocket function with data message of finished editing so it will send data to consumer.py file for db query to change task entry
 
 
-function displayNewNote(note) {
+function displayNewNote(note,tag) {
     var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
 
     let notesList = document.querySelector("#notes-list")
     let noteItem = document.createElement("li");
-    noteItem.className = "note"
+    noteItem.className = `note ${tag}`
     noteItem.style.cssText = `
         background-color:#${randomColor}
     `
@@ -349,3 +350,29 @@ function displayNewNote(note) {
     notesList.prepend(noteItem)
     // document.querySelector("#new-note").value = ""
 } //creates new notes list item with a random background color
+
+function displayTaggedNotes(tag) {
+    console.log(`${tag}`)
+
+    if (tag != "all") {
+        let noteListReset = document.querySelector("#notes-list").children;
+        for (let i = 0;i<noteListReset.length;i++) {
+            // console.log(noteList[i].id)
+            noteListReset[i].style.display = ""
+        } //this is to reset all notes display
+
+        let noteList = document.querySelector("#notes-list").children;
+        for (let i = 0;i<noteList.length;i++) {
+            // console.log(noteList[i].id)
+            if (noteList[i].id != `${tag}`) {
+                noteList[i].style.display = "none"
+            }
+        } //this searches all notes in note list and checks if the id matches the current tag function parameter if not change css style display to none
+    } else {
+        let noteListReset = document.querySelector("#notes-list").children;
+        for (let i = 0;i<noteListReset.length;i++) {
+            // console.log(noteList[i].id)
+            noteListReset[i].style.display = ""
+        } //this is to reset all notes display
+    }
+}

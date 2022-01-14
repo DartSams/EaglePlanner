@@ -27,6 +27,7 @@
     background-color: var(--Sidebar_color);
     left:-310px;
     transition: 1s;
+    z-index:2;
 }
 
 #sidebar #toggle {
@@ -229,6 +230,11 @@
     flex-direction: column;
     width:100vw;
     height:100vh;
+    align-items: center;
+}
+
+#notes-container #create-note {
+    width:10vw
 }
 
 #notes-container #notes-list {
@@ -250,4 +256,22 @@
 textarea{
     width:70vw;
     height:60vh
+}
+
+#notes-tags-list {
+    position: relative;
+    left:-45px;
+    top:10vh;
+    right:30px;
+    display: flex;
+    flex-direction: column;
+    width:15vw
+}
+
+#notes-tags-list #tag-search-div {
+    display: flex;
+}
+
+#notes-tags-list #tag {
+    display: flex;
 }

@@ -21,3 +21,4 @@ class Note(models.Model):
     user = models.CharField(max_length=20)
     user_id = models.CharField(max_length=99)
     note_message = models.TextField()
+    note_tag = models.CharField(max_length=50)

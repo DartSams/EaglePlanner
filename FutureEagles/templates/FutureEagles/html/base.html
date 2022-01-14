@@ -161,6 +161,21 @@
 
 
         if (current_user && current_tab) {
+            let calendarSwitch = document.querySelector("#calendar-switch");
+            calendarSwitch.addEventListener("click",function() {
+                window.location.href = "/calendar"
+            })
+
+            let listSwitch = document.querySelector("#task-switch");
+            listSwitch.addEventListener("click",function() {
+                window.location.href = "/tasks"
+            })
+
+            let notesSwitch = document.querySelector("#notes-switch");
+            notesSwitch.addEventListener("click",function() {
+                window.location.href = "/notes"
+            })
+
             let createTask = document.getElementById("create-task");
             if (createTask) {
                 let popupContainer = document.querySelector("#popup-container")
@@ -205,6 +220,14 @@
                 // console.log(noteItem[i].style.backgroundColor)
                 // console.log(note)
             }
+
+            let searchTagButton = document.querySelector("#tag-search");
+            searchTagButton.addEventListener("click",function() {
+                let searchTag = document.querySelector("#note-tag-input");
+                // console.log(searchTag.value)
+                displayTaggedNotes(searchTag.value)
+                document.querySelector("#note-tag-input").value = ""
+            })
         }
     </script>
 </footer>

@@ -11,6 +11,7 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
             "current_user":request.session["logged-in-user"],
             "tab":tab
         }
+        note_tags=[]
         try:
             j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"])
             for task_entry in j:
@@ -26,6 +27,13 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
 
             n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"])
             data["user_notes"] = n
+
+            for tag in n: #searches the notes db and removes duplicates
+                if tag.note_tag not in note_tags:
+                    note_tags.append(tag.note_tag)
+            data["notes_tags"] = note_tags
+            # print(note_tags)
+
         except:
             print(f"task not found by {request.session['logged-in-user']}")
 

@@ -10,7 +10,7 @@
 
         <div id="sidebar-buttons">
             <button id="calendar-switch">Calendar</button>
-            <button id="list-switch">List</button>
+            <button id="task-switch">Task</button>
             <button id="notes-switch">Notes</button>
             <button id="google-signin-button" ><div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div></button>
         </div>
@@ -106,23 +106,60 @@
 {% endblock %}
 
 {% block notes_container %}
+
+    <div id="notes-tags-list">
+        <!-- <div id="tag">
+            <input type="radio" name="tag" value="all"><label for="all">All</label>
+        </div> -->
+
+        
+        <div id="tag-search-div">
+            <input type="text" id="note-tag-input" placeholder="#TagName" >
+            <button type="submit" id="tag-search">Enter</button>
+        </div>
+        <!-- {% for i in user_notes %}
+            {% if "#" != i.note_tag %}
+                <div id="tag" class="note-tag-div">
+                    <input type="radio" name="tag" value="{{i.note_tag}}" id="note-tag-radio"><label for="{{i.note_tag}}">{{i.note_tag}}</label>
+                </div>
+            {% endif %}
+        {% endfor %} -->
+        <div id="tag" class="note-tag-div">
+            <input type="radio" name="tag" value="all" id="note-tag-radio" onclick="displayTaggedNotes(value)"><label for="all">All</label>
+        </div>
+        
+
+        {% for m in notes_tags %}
+            {% if "#" != m %}
+                <div id="tag" class="note-tag-div">
+                    <input type="radio" name="tag" value="{{m}}" id="note-tag-radio" onclick="displayTaggedNotes(value)"><label for="{{m}}">{{m}}</label>
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
     <div id="notes-container">
         <button id="create-note">Create Note</button>
         <ul id="notes-list">
-            <li class="note">
-                <p>Test</p>
+            <li class="note {{i.note_tag}}">
+                <pre>Test</pre>
             </li>
             {% for i in user_notes %}
-                <li class="note">
-                    <pre>{{i.note_message}}</pre>
-                </li>
+                {% if i.note_tag != "#" %}
+                    <li class="note {{i.note_tag}}" id="{{i.note_tag}}">
+                        <pre>{{i.note_message}}</pre>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
 
         <div id="popup-container">
             <div class="popup" id="note-popup">
                 <div class="popup-header"><button>X</button></div>
-                <div class="popup-body"></div>
+                <div class="popup-body">
+                    <label for="new-note-tag">Tag:</label>
+                    <input type="text" id="new-note-tag" value="#">
+                </div>
                 <div class="popup-footer">
                     <textarea name="new-note" id="new-note" cols="30" rows="10"></textarea>
                     <br>
