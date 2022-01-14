@@ -68,6 +68,10 @@ function closePopup (container) {
     if (container.className == "popup-to-delete") {
         container.remove()
     } // important to stop creating many popup containers will delete edit popup container from html
+    // let popupContainer = document.querySelector("#new-note").value = ""
+    if (container.children[2].id == "note-popup") {
+        document.querySelector("#new-note").value = ""
+    }
 } //closes popup conainer recieved from function parameter
 
 
@@ -79,10 +83,10 @@ socket.onopen = function(event) {
     console.log(event)
     socket.send('Thanks for connecting')
 
-    for(let i=0;i<=100;i++){
-        displayNewNote("lorem ipsum") //test the limits of creating notes using js dom using automatic data of 100 notes
-        // displayNewTask("sleep","now") //test the limits of creating task using js dom using automatic data of 100 task
-    } 
+    // for(let i=0;i<=100;i++){
+    //     displayNewNote("lorem ipsum") //test the limits of creating notes using js dom using automatic data of 100 notes
+    //     // displayNewTask("sleep","now") //test the limits of creating task using js dom using automatic data of 100 task
+    // } 
 } //when page first opens
 
 socket.onmessage = function(event) {
@@ -106,9 +110,11 @@ socket.onclose = function(event) {
 sendTaskData=function(message) {
     // console.log("tester")
     let popupContainer = document.querySelector("#popup-container")
+    let user = document.querySelector('.profile-user').innerText
+    let user_id = document.querySelector('.profile-user').id
     if (message == "add new task") {
-        user = document.querySelector('.profile-user').innerText
-        user_id = document.querySelector('.profile-user').id
+        // user = document.querySelector('.profile-user').innerText
+        // user_id = document.querySelector('.profile-user').id
         task=document.querySelector('#new-task').value
         taskDate=document.querySelector('#task-date').value
         socket.send([message,user,user_id,task,taskDate])
@@ -117,7 +123,7 @@ sendTaskData=function(message) {
         displayNewTask(task,taskDate)
     } else if (message == "add new note") {
         let note = document.querySelector("#new-note").value;
-        socket.send([message,note])
+        socket.send([message,user,user_id,note])
         closePopup(popupContainer)
         displayNewNote(note)
     }
@@ -341,5 +347,5 @@ function displayNewNote(note) {
 
     noteItem.append(preText)
     notesList.prepend(noteItem)
-    document.querySelector("#new-note").value = ""
+    // document.querySelector("#new-note").value = ""
 } //creates new notes list item with a random background color

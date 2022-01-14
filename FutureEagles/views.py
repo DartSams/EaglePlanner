@@ -1,14 +1,15 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
-from .models import Job,Google_user
+from django.http import HttpResponse,JsonResponse
+from .models import Job,Google_user,Note
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 @csrf_exempt
-def index(request):
+def index(request,tab="tasks"): #defaults the tab to a empty string if user doesnt pass in a proper tab name such as notes,tasks,calendar
     if request.method == "GET":
         data={
             "current_user":request.session["logged-in-user"],
+            "tab":tab
         }
         try:
             j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"])
@@ -22,6 +23,9 @@ def index(request):
                     "status":task_entry.status
                 }
             data["user_task"] = j
+
+            n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"])
+            data["user_notes"] = n
         except:
             print(f"task not found by {request.session['logged-in-user']}")
 
@@ -84,7 +88,6 @@ def index(request):
 
 
         return redirect("index")
-
 
 #TODO
     #now to start on notes app

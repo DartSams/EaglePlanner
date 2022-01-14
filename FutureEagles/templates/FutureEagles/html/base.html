@@ -22,15 +22,18 @@
     {% endblock %}
 
     <div id="center">
-        {% if current_user %}
+        {% if tab == "tasks" and current_user %}
             {% block task_container %}
             {% endblock %}
 
 
 
-        {% else %}
+        {% elif tab == "notes" and current_user %}
             {% block notes_container %}
             {% endblock %}
+
+        {% else %}
+            <p>Please login</p>
 
         {% endif%}
 
@@ -41,20 +44,17 @@
 </body>
 <footer>
     <script>
+        let current_user = "{{current_user|safe}}";
+        let current_tab = "{{tab|safe}}"
+
         //sign into google
         function onSignIn(googleUser) {
             // Useful data for your client-side scripts:
             var profile = googleUser.getBasicProfile();
-            // console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-            // console.log('Full Name: ' + profile.getName());
-            // console.log('Given Name: ' + profile.getGivenName());
-            // console.log('Family Name: ' + profile.getFamilyName());
-            // console.log("Image URL: " + profile.getImageUrl());
-            // console.log("Email: " + profile.getEmail());
+
 
             // The ID token you need to pass to your backend:
             var id_token = googleUser.getAuthResponse().id_token;
-            // console.log("ID Token: " + id_token);
             // testSocket("Signing In,")
 
             document.getElementById("google-signin-button").remove() //removes google signin button when signing into account
@@ -84,7 +84,6 @@
             } //creates settings button
             settingsDivContainer.appendChild(settingsDiv)
             dropdown.appendChild(settingsDivContainer)
-            // sidebarButtons.append(dropdown)
 
             let dropdownContent = document.createElement("div");
             dropdownContent.id = "dropdown-content"
@@ -147,7 +146,6 @@
                 complete:function(){},
                 error:function (document, textStatus, thrownError){
                     alert("error");
-                    // console.log(profile.getName())
                 }
             }); //sends js dict to django backend view using ajax call
 
@@ -162,41 +160,52 @@
         } //signs out of google account
 
 
-        let createTask = document.getElementById("create-task");
-        if (createTask) {
-            let popupContainer = document.querySelector("#popup-container")
-            createTask.addEventListener("click",function() {
-                let popup = popupContainer.children[0]
-                openPopup(popupContainer,popup)
-            })
+        if (current_user && current_tab) {
+            let createTask = document.getElementById("create-task");
+            if (createTask) {
+                let popupContainer = document.querySelector("#popup-container")
+                createTask.addEventListener("click",function() {
+                    let popup = popupContainer.children[0]
+                    openPopup(popupContainer,popup)
+                })
 
-            let taskButton = document.getElementById("submit-task")
-            taskButton.addEventListener("click",function() {
-                sendTaskData("add new task")
-            })
-        } //creates popup for task
-        
-        let createNote = document.querySelector("#create-note");
-        if (createNote) {
-            let popupContainer = document.querySelector("#popup-container")
-            createNote.addEventListener("click",function() {
-                let popup = popupContainer.children[0]
-                openPopup(popupContainer,popup)
-            })
+                let taskButton = document.getElementById("submit-task")
+                taskButton.addEventListener("click",function() {
+                    sendTaskData("add new task")
+                })
+            } //creates popup for task
+            
+            let createNote = document.querySelector("#create-note");
+            if (createNote) {
+                let popupContainer = document.querySelector("#popup-container")
+                createNote.addEventListener("click",function() {
+                    let popup = popupContainer.children[0]
+                    openPopup(popupContainer,popup)
+                })
 
-            let notesButton = document.getElementById("submit-note")
-            notesButton.addEventListener("click",function() {
-                sendTaskData("add new note")
-                // displayNewNotes("cum")
-                // closePopup(popupContainer)
-            })
-        } //create popup for notes
-        
-        let closePopupButton = document.querySelector(".popup-header").children[0]
-        closePopupButton.addEventListener("click",function() {
-            let popupContainer = document.querySelector("#popup-container")
-            closePopup(popupContainer)
-        }) //closes popup
+                let notesButton = document.getElementById("submit-note")
+                notesButton.addEventListener("click",function() {
+                    sendTaskData("add new note")
+                    // displayNewNotes("cum")
+                    // closePopup(popupContainer)
+                })
+            } //create popup for notes
+            
+            let closePopupButton = document.querySelector(".popup-header").children[0]
+            closePopupButton.addEventListener("click",function() {
+                let popupContainer = document.querySelector("#popup-container")
+                closePopup(popupContainer)
+            }) //closes popup
+            let noteItem = document.getElementsByClassName("note")
+            // console.log(notes)
+            for (let i = 0;i<noteItem.length;i++) {
+                let note = noteItem[i].children[0].innerText
+                var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
+                noteItem[i].style.backgroundColor = `#${randomColor}`
+                // console.log(noteItem[i].style.backgroundColor)
+                // console.log(note)
+            }
+        }
     </script>
 </footer>
 </html>

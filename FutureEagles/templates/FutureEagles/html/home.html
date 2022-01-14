@@ -112,13 +112,17 @@
             <li class="note">
                 <p>Test</p>
             </li>
+            {% for i in user_notes %}
+                <li class="note">
+                    <pre>{{i.note_message}}</pre>
+                </li>
+            {% endfor %}
         </ul>
 
         <div id="popup-container">
             <div class="popup" id="note-popup">
                 <div class="popup-header"><button>X</button></div>
-                <div class="popup-body">
-                </div>
+                <div class="popup-body"></div>
                 <div class="popup-footer">
                     <textarea name="new-note" id="new-note" cols="30" rows="10"></textarea>
                     <br>

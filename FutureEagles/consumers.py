@@ -1,5 +1,5 @@
 from channels.consumer import SyncConsumer
-from .models import Job
+from .models import Job,Note
 import json
 
 class EchoConsumer(SyncConsumer):
@@ -36,6 +36,8 @@ class EchoConsumer(SyncConsumer):
         elif event[0] == 'add new note':
             print(event)
             print(f"***Creating new note: {event}***")
+            note_message = Note(user=event[1],user_id=event[2],note_message=event[3])
+            note_message.save()
 
     def websocket_disconnect(self,event):
         print("connection is disconnected")
