@@ -138,19 +138,6 @@
                 {% if i.note_tag != "#" %}
                     <li class="note {{i.note_tag}}" id="{{i.note_tag}}">
                         <pre>{{i.note_message}}</pre>
-                        <!-- <div id="dropdown">
-                            <div id="settings-container">
-                                <div id="settings">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                            <div id="dropdown-content">
-                                <a onclick="testSocket(id)" id="edit task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Edit</a>
-                                <a onclick="testSocket(id)" id="delete task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Delete</a>
-                            </div>
-                        </div> -->
                     </li>
                 {% endif %}
             {% endfor %}
@@ -180,8 +167,24 @@
                 <div class="popup-footer">
                     <textarea name="new-note" id="new-note" cols="30" rows="10"></textarea>
                     <br>
-                    <button id="submit-note" >Enter</button>
+                    <button id="submit-note">Enter</button>
                 </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- *******Blueprint for selecting notes in note container********* -->
+{% block selected_note_blueprint %}
+    <div id="selected-note-container" class="popup-to-delete">
+        <div id="selected-note">
+            <div id="close-note">X</div>
+            <div id="note">
+                <pre>Testing</pre>
+            </div>
+            <div id="selected-note-settings">
+                <button>Edit</button>
+                <button>Delete</button>
             </div>
         </div>
     </div>

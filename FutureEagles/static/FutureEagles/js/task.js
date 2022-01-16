@@ -46,11 +46,11 @@ function showMobileNav() {
 }
 
 
-function openPopup (container,popup) {
+function openPopup (container,popup,note) {
     // console.log(container)
     // console.log(popup)
     container.style.display = "flex"
-    if (popup.id == "list-popup" || container.className == "popup-to-delete") {
+    if (popup.id == "list-popup" ) {
         popup.style.cssText = `
             width:300px
         `
@@ -58,6 +58,10 @@ function openPopup (container,popup) {
         popup.style.cssText = `
             width:80%
         `
+        if (note) {
+            document.querySelector("#new-note-tag").value = note.id
+            document.querySelector("#new-note").value = note.innerText
+        }
     }
     
 } //opens popup conainer recieved from function parameter
@@ -67,7 +71,7 @@ function closePopup (container) {
     container.style.display = "none"
     if (container.className == "popup-to-delete") {
         container.remove()
-        
+        return
     } // important to stop creating many popup containers will delete edit popup container from html
     // let popupContainer = document.querySelector("#new-note").value = ""
     else if (container.children[2].id == "note-popup") {
@@ -226,6 +230,7 @@ function editTaskPopup(data) {
 
     let popup = document.createElement("div")
     popup.className = "popup"
+    popup.style.width = "300px"
 
     let popupHeader = document.createElement("div");
     popupHeader.className = "popup-header"
@@ -328,20 +333,29 @@ function saveData(splitPrevData) {
     }
     const newData = `${newDataJSON["task"]},${newDataJSON["due date"]},${selectedSize},${splitPrevData[3]},${splitPrevData[4]}`
 
-    testSocket(`finished editing,${splitPrevData},${newData}`)
+    testSocket(`finished editing task,${splitPrevData},${newData}`)
     document.querySelector("#new-task-input").value = ""
     document.querySelector("#task-date-input").value = ""
-} //sends data to testSocket function with data message of finished editing so it will send data to consumer.py file for db query to change task entry
+} //sends data to testSocket function with data message of finished editing task so it will send data to consumer.py file for db query to change task entry
 
 
 function displayNewNote(note,tag) {
-    var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
+    let x = Math.floor(Math.random() * 256);
+    let y = 100+ Math.floor(Math.random() * 256);
+    let z = 50+ Math.floor(Math.random() * 256);
+    if (x && y && z > 240) {
+        x-=20;
+        y-=30;
+        z-=30
+    }
+    let randomColor = `(${x},${y},${z})`
+    // var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
     console.log(note)
     let notesList = document.querySelector("#notes-list")
     let noteItem = document.createElement("li");
     noteItem.className = `note ${tag}`
     noteItem.style.cssText = `
-        background-color:#${randomColor}
+        background-color:${randomColor}
     `
     // noteItem.style.backgroundColor = "red"
     let preText = document.createElement("pre");
@@ -379,7 +393,7 @@ function displayTaggedNotes(tag) {
 }
 
 function selectNote(element) {
-    console.log(element.innerText)
+    console.log(element)
     let center = document.querySelector("#center")
 
     let selectedNoteContainer = document.createElement("div");
@@ -388,6 +402,7 @@ function selectNote(element) {
 
     let popupNote = document.createElement("div");
     popupNote.id = "selected-note"
+    popupNote.style.backgroundColor = element.style.backgroundColor
 
     let closeNote = document.createElement("div");
     closeNote.id = "close-note"
@@ -401,6 +416,10 @@ function selectNote(element) {
     editNoteDiv.id = "selected-note-settings"
     let editNote = document.createElement("button");
     editNote.innerText = "Edit"
+    editNote.id = `${document.querySelector(".profile-user").innerText},${document.querySelector(".profile-user").id},${element.innerText},${element.id}`
+    editNote.addEventListener("click",function() {
+        editNotePopup(editNote.id.split(","))
+    })
     let deleteNote = document.createElement("button");
     deleteNote.innerText = "Delete"
 
@@ -410,7 +429,7 @@ function selectNote(element) {
         "note":pre.innerHTML,
     }
     deleteNote.addEventListener("click",function() {
-        testSocket(`delete note,${newDataJSON["user"]},${newDataJSON["user id"]},${newDataJSON["note"]}`)
+        testSocket(`delete note,${newDataJSON["user"]},${newDataJSON["user id"]},${newDataJSON["note"].innerHTML}`)
         element.remove()
         closePopup(selectedNoteContainer)
     })
@@ -422,3 +441,92 @@ function selectNote(element) {
     selectedNoteContainer.append(popupNote)
     center.append(selectedNoteContainer)
 } //when clicking on a note opens a popup displaying the note for easier read and allows editing/deleting
+
+
+function editNotePopup(data) {
+    // console.log(data)
+
+
+    let centerDiv = document.querySelector("#center")
+
+    let popupContainer = document.createElement("div");;
+    popupContainer.id = "popup-container"
+    popupContainer.className = "popup-to-delete"
+
+    let popup = document.createElement("div")
+    popup.className = "popup"
+    popup.id = "note-popup"
+
+    let popupHeader = document.createElement("div");
+    popupHeader.className = "popup-header"
+    let closePopupButton = document.createElement("button");
+    closePopupButton.innerText = "X"
+    closePopupButton.addEventListener("click",function() {
+        closePopup(popupContainer)
+    })
+
+    let popupBody = document.createElement("div");
+    popupBody.className = "popup-body"
+    let popupBodyText = document.createElement("h3");
+    popupBodyText.innerText = "Edit task below."
+    
+    let popupFooter = document.createElement("div");
+    popupFooter.id = "popup-footer"
+    // let taskInput = document.createElement("input")
+    // taskInput.id = "new-task-input"
+    // taskInput.value = splitPrevData[0]
+    let noteTagInput = document.createElement("input");
+    noteTagInput.id = "edited-tag-input"
+    noteTagInput.value = data[3]
+
+    let textareaInput = document.createElement("textarea");
+    textareaInput.id = "edit-note-input"
+    textareaInput.type = "date"
+    textareaInput.value = data[2]
+    // console.log(splitPrevData[1].id)
+
+
+
+    let saveButton = document.createElement("button")
+    saveButton.innerHTML = "Save"
+    saveButton.id = ""
+    saveButton.addEventListener("click",function() {
+        saveNoteData(data)
+        closePopup(popupContainer)
+        window.location.reload()
+        // console.log(data)
+    })
+
+    
+    popupHeader.append(closePopupButton)
+    popupBody.append(popupBodyText)
+
+    popupFooter.append(noteTagInput)
+    popupFooter.append(textareaInput)
+    popupFooter.append(document.createElement("br"))
+    popup.append(popupHeader)
+    popup.append(popupBody)
+    popup.append(popupFooter)
+    popupFooter.append(saveButton)
+
+    popupContainer.append(popup)
+    centerDiv.append(popupContainer)
+
+    openPopup(popupContainer,popup)
+} //creates a new popup div to edit currently selected task
+
+function saveNoteData(prevData) {
+    // console.log(`Split data: ${prevData}`)
+    
+    const newDataJSON = {
+        "user":prevData[0],
+        "user id":prevData[1],
+        "note":document.querySelector("#edit-note-input").value,
+        "note_tag":document.querySelector("#edited-tag-input").value,
+    }
+    const newData = `${newDataJSON["user"]},${newDataJSON["user id"]},${newDataJSON["note"]},${newDataJSON["note_tag"]}`
+
+    testSocket(`finished editing note,${prevData},${newData}`)
+    document.querySelector("#edit-note-input").value = ""
+    document.querySelector("#edited-tag-input").value = ""
+} //saves the new note and sends to the cosnumer.py file with data message of finished editing note

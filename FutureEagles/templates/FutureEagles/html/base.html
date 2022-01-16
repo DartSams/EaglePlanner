@@ -224,8 +224,17 @@
             // console.log(notes)
             for (let i = 0;i<noteItem.length;i++) {
                 let note = noteItem[i].children[0].innerText
-                var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
-                noteItem[i].style.backgroundColor = `#${randomColor}`
+                // var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
+                let x = Math.floor(Math.random() * 256);
+                let y = 100+ Math.floor(Math.random() * 256);
+                let z = 50+ Math.floor(Math.random() * 256);
+                if (x && y && z > 240) {
+                    x-=20;
+                    y-=30;
+                    z-=30
+                }
+                let randomColor = `rgb(${x},${y},${z})`
+                noteItem[i].style.backgroundColor = `${randomColor}`
                 // console.log(noteItem[i].style.backgroundColor)
                 // console.log(note)
             }

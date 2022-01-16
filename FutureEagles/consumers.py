@@ -26,7 +26,7 @@ class EchoConsumer(SyncConsumer):
             except:
                 print("delete failed")
 
-        elif event[0] == 'finished editing': #edits the current task
+        elif event[0] == 'finished editing task': #edits the current task
             print(event)
             task = Job.objects.filter(user=event[4],user_id=event[5],task=event[1],due_date=event[2],status=event[3])
             task.update(user=event[9],user_id=event[10],task=event[6],due_date=event[7],status=event[8])
@@ -39,7 +39,7 @@ class EchoConsumer(SyncConsumer):
             note_message = Note(user=event[1],user_id=event[2],note_message=event[3],note_tag=event[4])
             note_message.save()
 
-        elif event[0] == 'delete note': #setup later to delete task
+        elif event[0] == 'delete note': #deletes note
             # print(event)
             if "<br>" in event[3]:
                 note=event[3].replace("<br>","\n") #this replaces the html <br> with python's version of line skip breaks which is \n
@@ -51,6 +51,16 @@ class EchoConsumer(SyncConsumer):
                 print(f"***deleting note where note is {event[3]} by {event[1]}***")
             except:
                 print("delete failed")
+
+        elif event[0] == "finished editing note": #updates note in db according to logged in user,note and note_tag
+            print("editing note")
+            print(event)
+            try:
+                task = Note.objects.filter(user=event[1],user_id=event[2],note_message=event[3],note_tag=event[4])
+                task.update(user=event[1],user_id=event[2],note_message=event[7],note_tag=event[8])
+            except:
+                print("failed editing note")
+
 
     def websocket_disconnect(self,event):
         print("connection is disconnected")
