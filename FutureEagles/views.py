@@ -87,4 +87,5 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
         return redirect("index")
 
 #TODO
-    #add feature of editing/deleting notes 
+    #add feature of editing/deleting notes
+    #fix js using switches instead of if/else if statements

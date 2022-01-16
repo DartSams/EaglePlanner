@@ -67,9 +67,10 @@ function closePopup (container) {
     container.style.display = "none"
     if (container.className == "popup-to-delete") {
         container.remove()
+        
     } // important to stop creating many popup containers will delete edit popup container from html
     // let popupContainer = document.querySelector("#new-note").value = ""
-    if (container.children[2].id == "note-popup") {
+    else if (container.children[2].id == "note-popup") {
         document.querySelector("#new-note").value = ""
     }
 } //closes popup conainer recieved from function parameter
@@ -376,3 +377,38 @@ function displayTaggedNotes(tag) {
         } //this is to reset all notes display
     }
 }
+
+function selectNote(element) {
+    console.log(element)
+    let center = document.querySelector("#center")
+
+    let selectedNoteContainer = document.createElement("div");
+    selectedNoteContainer.id = "selected-note-container"
+    selectedNoteContainer.className = "popup-to-delete"
+
+    let popupNote = document.createElement("div");
+    popupNote.id = "selected-note"
+
+    let closeNote = document.createElement("div");
+    closeNote.id = "close-note"
+    closeNote.innerText = "X"
+    closeNote.addEventListener("click",function() {
+        closePopup(selectedNoteContainer)
+    })
+    let pre = document.createElement("pre");
+    pre.innerText = element.innerText
+    let editNoteDiv = document.createElement("div");
+    editNoteDiv.id = "selected-note-settings"
+    let editNote = document.createElement("button");
+    editNote.innerText = "Edit"
+    let deleteNote = document.createElement("button");
+    deleteNote.innerText = "Delete"
+
+    popupNote.append(closeNote)
+    popupNote.append(pre)
+    editNoteDiv.append(editNote)
+    editNoteDiv.append(deleteNote)
+    popupNote.append(editNoteDiv)
+    selectedNoteContainer.append(popupNote)
+    center.append(selectedNoteContainer)
+} //when clicking on a note opens a popup displaying the note for easier read and allows editing/deleting

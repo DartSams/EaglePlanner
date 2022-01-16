@@ -205,6 +205,15 @@
                     // closePopup(popupContainer)
                 })
             } //create popup for notes
+
+            let note = document.getElementsByClassName("note")
+            
+            for (let i = 0;i<note.length;i++) {
+                note[i].addEventListener("click",function() {
+                    // console.log(this)
+                    selectNote(this)
+                })
+            }
             
             let closePopupButton = document.querySelector(".popup-header").children[0]
             closePopupButton.addEventListener("click",function() {

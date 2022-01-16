@@ -108,22 +108,12 @@
 {% block notes_container %}
 
     <div id="notes-tags-list">
-        <!-- <div id="tag">
-            <input type="radio" name="tag" value="all"><label for="all">All</label>
-        </div> -->
-
         
         <div id="tag-search-div">
             <input type="text" id="note-tag-input" placeholder="#TagName" >
             <button type="submit" id="tag-search">Enter</button>
         </div>
-        <!-- {% for i in user_notes %}
-            {% if "#" != i.note_tag %}
-                <div id="tag" class="note-tag-div">
-                    <input type="radio" name="tag" value="{{i.note_tag}}" id="note-tag-radio"><label for="{{i.note_tag}}">{{i.note_tag}}</label>
-                </div>
-            {% endif %}
-        {% endfor %} -->
+
         <div id="tag" class="note-tag-div">
             <input type="radio" name="tag" value="all" id="note-tag-radio" onclick="displayTaggedNotes(value)"><label for="all">All</label>
         </div>
@@ -136,8 +126,8 @@
                 </div>
             {% endif %}
         {% endfor %}
-        
     </div>
+
     <div id="notes-container">
         <button id="create-note">Create Note</button>
         <ul id="notes-list">
@@ -148,10 +138,37 @@
                 {% if i.note_tag != "#" %}
                     <li class="note {{i.note_tag}}" id="{{i.note_tag}}">
                         <pre>{{i.note_message}}</pre>
+                        <!-- <div id="dropdown">
+                            <div id="settings-container">
+                                <div id="settings">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div id="dropdown-content">
+                                <a onclick="testSocket(id)" id="edit task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Edit</a>
+                                <a onclick="testSocket(id)" id="delete task,{{i.task}},{{i.due_date}},{{i.status}},{{current_user}},{{i.user_id}}">Delete</a>
+                            </div>
+                        </div> -->
                     </li>
                 {% endif %}
             {% endfor %}
         </ul>
+
+        <!-- <div id="selected-note-container" class="popup-to-delete">
+            <div id="selected-note">
+                <div id="close-note">X</div>
+                <div id="note">
+                    <pre>Testing</pre>
+                </div>
+                <div id="selected-note-settings">
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </div>
+            </div>
+        </div>
+         -->
 
         <div id="popup-container">
             <div class="popup" id="note-popup">

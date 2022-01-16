@@ -234,7 +234,7 @@
 }
 
 #notes-container #create-note {
-    width:10vw
+    width:30vw
 }
 
 #notes-container #notes-list {
@@ -260,7 +260,7 @@ textarea{
 
 #notes-tags-list {
     position: relative;
-    left:-45px;
+    left:-40px;
     top:10vh;
     right:30px;
     display: flex;
@@ -272,6 +272,65 @@ textarea{
     display: flex;
 }
 
+#notes-tags-list #tag-search-div #note-tag-input {
+    width: 20vw;
+}
+
 #notes-tags-list #tag {
     display: flex;
+}
+
+#selected-note-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top:0;
+    left:0;
+    height: 100%;
+    width:100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+#selected-note {
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    padding:10px 30px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#close-note {
+    position: fixed;
+    top:0;
+    right: 0;
+    /* margin: 20px 50px 0px 0px; */
+    margin: 3vh 5vw 0px 0px;
+    background-color: white;
+    height: 30px;
+    width: 30px;
+    display: flex;  
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+#close-note:hover {
+    cursor: pointer;
+}
+
+#selected-note-settings {
+    position: fixed;
+    bottom: 0;
+}
+
+#selected-note-settings button{
+    height: 8vh;
+    width: 30vw;
 }
