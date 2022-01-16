@@ -39,6 +39,19 @@ class EchoConsumer(SyncConsumer):
             note_message = Note(user=event[1],user_id=event[2],note_message=event[3],note_tag=event[4])
             note_message.save()
 
+        elif event[0] == 'delete note': #setup later to delete task
+            # print(event)
+            if "<br>" in event[3]:
+                note=event[3].replace("<br>","\n") #this replaces the html <br> with python's version of line skip breaks which is \n
+            else:
+                note=event[3]
+            try:
+                n=Note.objects.filter(user=event[1],user_id=event[2],note_message=note)
+                n.delete()
+                print(f"***deleting note where note is {event[3]} by {event[1]}***")
+            except:
+                print("delete failed")
+
     def websocket_disconnect(self,event):
         print("connection is disconnected")
         print(event)

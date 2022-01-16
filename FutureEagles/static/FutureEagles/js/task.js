@@ -336,7 +336,7 @@ function saveData(splitPrevData) {
 
 function displayNewNote(note,tag) {
     var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
-
+    console.log(note)
     let notesList = document.querySelector("#notes-list")
     let noteItem = document.createElement("li");
     noteItem.className = `note ${tag}`
@@ -379,7 +379,7 @@ function displayTaggedNotes(tag) {
 }
 
 function selectNote(element) {
-    console.log(element)
+    console.log(element.innerText)
     let center = document.querySelector("#center")
 
     let selectedNoteContainer = document.createElement("div");
@@ -404,6 +404,16 @@ function selectNote(element) {
     let deleteNote = document.createElement("button");
     deleteNote.innerText = "Delete"
 
+    const newDataJSON = {
+        "user":document.querySelector(".profile-user").innerText,
+        "user id":document.querySelector(".profile-user").id,
+        "note":pre.innerHTML,
+    }
+    deleteNote.addEventListener("click",function() {
+        testSocket(`delete note,${newDataJSON["user"]},${newDataJSON["user id"]},${newDataJSON["note"]}`)
+        element.remove()
+        closePopup(selectedNoteContainer)
+    })
     popupNote.append(closeNote)
     popupNote.append(pre)
     editNoteDiv.append(editNote)
