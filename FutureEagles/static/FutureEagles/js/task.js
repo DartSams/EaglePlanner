@@ -530,3 +530,41 @@ function saveNoteData(prevData) {
     document.querySelector("#edit-note-input").value = ""
     document.querySelector("#edited-tag-input").value = ""
 } //saves the new note and sends to the cosnumer.py file with data message of finished editing note
+
+function createMonth(month,day,tasks) {
+    // let tasks = ["play games","sleep"]
+    let centerDiv = document.querySelector("#center")
+    let calendarContainer = document.createElement("div");
+    calendarContainer.id = "calendar-container"
+    let calendarHeader = document.createElement("div");
+    calendarHeader.id = "calendar-header"
+    calendarHeader.innerText = `${month} 2022`
+    let dayContainer = document.createElement("div");
+    dayContainer.id = "days-container"
+    let ulDays = document.createElement("ul");
+    ulDays.id = "month"
+    
+    for (let i=1;i<=day;i++) {
+        let liDay = document.createElement("li");
+        liDay.id = "day"
+        // liDay.innerText = "1"
+
+        let dayNum = document.createElement("div");
+        dayNum.id = "day-number"
+        dayNum.innerText = i
+        let dayTask = document.createElement("div");
+        dayTask.id = "day-task"
+        for (let j=0;j<tasks.length;j++) {
+            let task = document.createElement("div");
+            task.innerText = tasks[j]
+            dayTask.append(task)
+        }
+        liDay.append(dayNum)
+        liDay.append(dayTask)
+        ulDays.append(liDay)
+    }
+    dayContainer.append(ulDays)
+    calendarContainer.append(calendarHeader)
+    calendarContainer.append(dayContainer)
+    centerDiv.append(calendarContainer)
+}

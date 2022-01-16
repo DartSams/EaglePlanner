@@ -259,6 +259,7 @@ textarea{
     height:60vh
 }
 
+/* ****************** Notes tags Section ************************* */
 #notes-tags-list {
     position: relative;
     left:-40px;
@@ -281,6 +282,7 @@ textarea{
     display: flex;
 }
 
+/* ****************** Selected Notes Section ************************* */
 #selected-note-container{
     display: flex;
     justify-content: center;
@@ -335,4 +337,32 @@ textarea{
 #selected-note-settings button{
     height: 8vh;
     width: 30vw;
+}
+
+/* ****************** Calendar Section ************************* */
+#calendar-container {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+
+
+#calendar-container #month {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    list-style-type: none;
+    width:80vw;
+    height: 80vh;
+    background-color: red;
+    padding:5px
+}
+
+#calendar-container #month #day {
+    width:8vw;
+    height: 12vh;
+    background-color: #1e90ff;
+    padding: 5px;
 }

@@ -32,8 +32,8 @@
             {% block notes_container %}
             {% endblock %}
 
-        {% else %}
-            <p>Please login</p>
+
+
 
         {% endif%}
 
@@ -46,6 +46,25 @@
     <script>
         let current_user = "{{current_user|safe}}";
         let current_tab = "{{tab|safe}}"
+
+        let x = new Date()
+        // console.log(x)
+        function getDaysInMonth(month,year) {
+            // Here January is 1 based
+            //Day 0 is the last day in the previous month
+            return new Date(year, month, 0).getDate();
+            // Here January is 0 based
+            // return new Date(year, month+1, 0).getDate();
+        };
+
+        for (let i = 1;i<=12;i++) {
+            console.log(getDaysInMonth(i,2022))
+        }
+
+        createMonth("Jan",31,["sleep","play games"])
+
+
+
 
         //sign into google
         function onSignIn(googleUser) {

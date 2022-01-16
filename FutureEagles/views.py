@@ -13,15 +13,19 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
         }
         note_tags=[]
         if request.session["logged-in-user"]:
-            j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search job db
-            data["user_task"] = j
+            if tab == "tasks":
+                j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search job db
+                data["user_task"] = j
 
-            n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search note db
-            data["user_notes"] = n
+            elif tab =="notes":
+                n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search note db
+                data["user_notes"] = n
+                note_tags = set(tag.note_tag for tag in n if tag.note_tag not in note_tags) #searches the notes db for note tags and removes duplicates
+                # print(note_tags)
+                data["notes_tags"] = note_tags
 
-            note_tags = set(tag.note_tag for tag in n if tag.note_tag not in note_tags) #searches the notes db and removes duplicates
-            # print(note_tags)
-            data["notes_tags"] = note_tags
+            elif tab not in ["tasks","notes","calendar"]:
+                print("not a valid tab page")
 
         else:
             print(f"User not logged in.")
