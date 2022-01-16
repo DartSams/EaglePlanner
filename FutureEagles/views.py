@@ -12,30 +12,19 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
             "tab":tab
         }
         note_tags=[]
-        try:
-            j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"])
-            for task_entry in j:
-                # print(f"Entry: {task_entry.user},{task_entry.user_id},{task_entry.task},{task_entry.due_date},{task_entry.status}")
-                user_data = {
-                    "user name":task_entry.user,
-                    "id":task_entry.user_id,
-                    "task":task_entry.task,
-                    "due date":task_entry.due_date,
-                    "status":task_entry.status
-                }
+        if request.session["logged-in-user"]:
+            j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search job db
             data["user_task"] = j
 
-            n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"])
+            n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search note db
             data["user_notes"] = n
 
-            for tag in n: #searches the notes db and removes duplicates
-                if tag.note_tag not in note_tags:
-                    note_tags.append(tag.note_tag)
-            data["notes_tags"] = note_tags
+            note_tags = set(tag.note_tag for tag in n if tag.note_tag not in note_tags) #searches the notes db and removes duplicates
             # print(note_tags)
+            data["notes_tags"] = note_tags
 
-        except:
-            print(f"task not found by {request.session['logged-in-user']}")
+        else:
+            print(f"User not logged in.")
 
         return render(request,"FutureEagles/html/home.html",data)
 
@@ -98,4 +87,4 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
         return redirect("index")
 
 #TODO
-    #now to start on notes app
+    #add feature of editing/deleting notes 
