@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse,JsonResponse
 from .models import Job,Google_user,Note
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Create your views here.
 @csrf_exempt
@@ -13,9 +14,17 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
         }
         note_tags=[]
         if request.session["logged-in-user"]:
-            if tab == "tasks":
-                j = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search job db
-                data["user_task"] = j
+            if tab in ["tasks","calendar"]:
+                user_jobs = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search job db
+                data["user_task"] = user_jobs
+                # ss = {}
+                data["tasks"] = [i.task for i in user_jobs]
+                data["due_date"] = [i.due_date[5:] for i in user_jobs]
+                # # data["tasks"] = ss
+                # for each in user_jobs:
+                #     # c=each.due_date.split("-")
+                #     ss["s"] = each.task
+                # # data["tasks"] = ss
 
             elif tab =="notes":
                 n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search note db

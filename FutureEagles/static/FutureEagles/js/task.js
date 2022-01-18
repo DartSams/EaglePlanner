@@ -553,10 +553,26 @@ function getDaysInMonth(month,year) {
     // return new Date(year, month+1, 0).getDate();
 };
 
-function createMonth(month,day,tasks) {
+function createMonth(monthHolder,dayHolder,tasks) {
     // let tasks = ["play games","sleep"]
-    console.log(month)
-    console.log(day)
+    // console.log(month)
+    // console.log(dayHolder)
+    // console.log(tasks[0])
+    // x = JSON.parse(`"${tasks}"`)
+    console.log(monthHolder)
+    console.log(tasks)
+    for (let key in tasks) {
+        month = key.replace("'","").split("-")
+        day = key.slice(0,-1).split("-")
+        // console.log(day[1])
+        if (01 == monthHolder[0]) {
+            console.log("dump")
+        }
+        console.log(parseInt(month[0]))
+        // console.log(day)
+    }
+
+
     let centerDiv = document.querySelector("#center")
     let calendarContainer = document.createElement("div");
     calendarContainer.id = "calendar-container"
@@ -569,12 +585,12 @@ function createMonth(month,day,tasks) {
     prevMonthDiv.addEventListener("click",function() {
         console.log("previous month")
         document.querySelector("#calendar-container").remove()
-        createMonth(month-1,getDaysInMonth(month-1,2022),["sleep"])
+        createMonth(monthHolder-1,getDaysInMonth(monthHolder-1,2022),tasks)
     })
 
     let currentMonthYear = document.createElement("div");
     currentMonthYear.id = "current-month-year"
-    currentMonthYear.innerText = `${Months[month]} 2022`
+    currentMonthYear.innerText = `${Months[monthHolder]} 2022`
 
     let nextMonthDiv = document.createElement("div");
     nextMonthDiv.id = "next-month"
@@ -583,7 +599,7 @@ function createMonth(month,day,tasks) {
     nextMonthDiv.addEventListener("click",function() {
         console.log("next month")
         document.querySelector("#calendar-container").remove()
-        createMonth(month+1,getDaysInMonth(month+1,2022),["sleep"])
+        createMonth(monthHolder+1,getDaysInMonth(monthHolder+1,2022),tasks)
     })
 
 
@@ -592,8 +608,8 @@ function createMonth(month,day,tasks) {
     dayContainer.id = "days-container"
     let ulDays = document.createElement("ul");
     ulDays.id = "month"
-    
-    for (let i=1;i<=day;i++) {
+
+    for (let i=1;i<=dayHolder;i++) {
         let liDay = document.createElement("li");
         liDay.id = "day"
         // liDay.innerText = "1"
@@ -601,13 +617,22 @@ function createMonth(month,day,tasks) {
         let dayNum = document.createElement("div");
         dayNum.id = "day-number"
         dayNum.innerText = i
+        
         let dayTask = document.createElement("div");
         dayTask.id = "day-task"
-        for (let j=0;j<tasks.length;j++) {
-            let task = document.createElement("div");
-            task.innerText = tasks[j]
-            dayTask.append(task)
-        }
+        for (let key in tasks) {
+            month = key.replace("'","").split("-")
+            day = key.slice(0,-1).split("-")
+            // console.log(day)
+            if (i == day[1] &&  Months[monthHolder] == Months[parseInt(month[0])] ) {
+                // dayNum.innerText = "dump"
+                let task = document.createElement("div");
+                task.innerText = tasks[key]
+                dayTask.append(task)
+            } else {
+                dayNum.innerText = i
+            }
+        } //if
         liDay.append(dayNum)
         liDay.append(dayTask)
         ulDays.append(liDay)

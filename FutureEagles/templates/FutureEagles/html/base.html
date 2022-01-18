@@ -47,7 +47,16 @@
     <script>
         let current_user = "{{current_user|safe}}";
         let current_tab = "{{tab|safe}}"
-        console.log("Current tab is " + current_tab)
+        let tasks = "{{ tasks|safe }}".replace("[","").replace("]","").split(",")
+        let due_date = "{{due_date|safe}}".replace("[","").replace("]","").replace(" ","").split(",")
+        // console.log(due_date)
+        let taskDict = {}
+        for (let i = 0;i<tasks.length;i++) {
+            taskDict[due_date[i]] = tasks[i]
+            // console.log(due_date[i])
+        }
+        // console.log(taskDict)
+        
 
         let x = new Date()
         // console.log(x)
@@ -59,12 +68,12 @@
             // return new Date(year, month+1, 0).getDate();
         };
 
-        for (let i = 1;i<=12;i++) {
-            console.log(getDaysInMonth(i,2022))
-        } //returns the max number of days in all 12 months
+        // for (let i = 1;i<=12;i++) {
+        //     console.log(getDaysInMonth(i,2022))
+        // } //returns the max number of days in all 12 months
 
         if (current_tab == "calendar") {
-            createMonth(x.getMonth()+1,getDaysInMonth(x.getMonth(),2022),["sleep","play games"])
+            createMonth(x.getMonth()+1,getDaysInMonth(x.getMonth(),2022),taskDict)
         }
         
 
