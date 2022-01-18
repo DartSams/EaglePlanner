@@ -7,6 +7,20 @@ const dropContentList = {
 const url = "ws://localhost:8000/ws/FutureEagles/"
 const socket = new WebSocket(url);
 
+const Months = {
+    1:"January",
+    2:"February",
+    3:"March",
+    4:"April",
+    5:"May",
+    6:"June",
+    7:"July",
+    8:"August",
+    9:"September",
+    10:"October",
+    11:"November",
+    12:"December",
+}
 
 
 function showMobileNav() {
@@ -531,14 +545,49 @@ function saveNoteData(prevData) {
     document.querySelector("#edited-tag-input").value = ""
 } //saves the new note and sends to the cosnumer.py file with data message of finished editing note
 
+function getDaysInMonth(month,year) {
+    // Here January is 1 based
+    //Day 0 is the last day in the previous month
+    return new Date(year, month, 0).getDate();
+    // Here January is 0 based
+    // return new Date(year, month+1, 0).getDate();
+};
+
 function createMonth(month,day,tasks) {
     // let tasks = ["play games","sleep"]
+    console.log(month)
+    console.log(day)
     let centerDiv = document.querySelector("#center")
     let calendarContainer = document.createElement("div");
     calendarContainer.id = "calendar-container"
     let calendarHeader = document.createElement("div");
     calendarHeader.id = "calendar-header"
-    calendarHeader.innerText = `${month} 2022`
+    let prevMonthDiv = document.createElement("div");
+    prevMonthDiv.id = "prev-month"
+    let prevMonthButton = document.createElement("button");
+    prevMonthButton.innerText = "❮"
+    prevMonthDiv.addEventListener("click",function() {
+        console.log("previous month")
+        document.querySelector("#calendar-container").remove()
+        createMonth(month-1,getDaysInMonth(month-1,2022),["sleep"])
+    })
+
+    let currentMonthYear = document.createElement("div");
+    currentMonthYear.id = "current-month-year"
+    currentMonthYear.innerText = `${Months[month]} 2022`
+
+    let nextMonthDiv = document.createElement("div");
+    nextMonthDiv.id = "next-month"
+    let nextMonthButton = document.createElement("button");
+    nextMonthButton.innerText = "❯"
+    nextMonthDiv.addEventListener("click",function() {
+        console.log("next month")
+        document.querySelector("#calendar-container").remove()
+        createMonth(month+1,getDaysInMonth(month+1,2022),["sleep"])
+    })
+
+
+
     let dayContainer = document.createElement("div");
     dayContainer.id = "days-container"
     let ulDays = document.createElement("ul");
@@ -563,7 +612,14 @@ function createMonth(month,day,tasks) {
         liDay.append(dayTask)
         ulDays.append(liDay)
     }
+
+
     dayContainer.append(ulDays)
+    prevMonthDiv.append(prevMonthButton)
+    nextMonthDiv.append(nextMonthButton)
+    calendarHeader.append(prevMonthDiv)
+    calendarHeader.append(currentMonthYear)
+    calendarHeader.append(nextMonthDiv)
     calendarContainer.append(calendarHeader)
     calendarContainer.append(dayContainer)
     centerDiv.append(calendarContainer)

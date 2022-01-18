@@ -33,6 +33,7 @@
             {% endblock %}
 
 
+        
 
 
         {% endif%}
@@ -46,6 +47,7 @@
     <script>
         let current_user = "{{current_user|safe}}";
         let current_tab = "{{tab|safe}}"
+        console.log("Current tab is " + current_tab)
 
         let x = new Date()
         // console.log(x)
@@ -59,9 +61,12 @@
 
         for (let i = 1;i<=12;i++) {
             console.log(getDaysInMonth(i,2022))
-        }
+        } //returns the max number of days in all 12 months
 
-        createMonth("Jan",31,["sleep","play games"])
+        if (current_tab == "calendar") {
+            createMonth(x.getMonth()+1,getDaysInMonth(x.getMonth(),2022),["sleep","play games"])
+        }
+        
 
 
 
@@ -195,42 +200,69 @@
                 window.location.href = "/notes"
             })
 
-            let createTask = document.getElementById("create-task");
-            if (createTask) {
-                let popupContainer = document.querySelector("#popup-container")
-                createTask.addEventListener("click",function() {
-                    let popup = popupContainer.children[0]
-                    openPopup(popupContainer,popup)
-                })
+            if (current_tab == "tasks") {
+                let createTask = document.getElementById("create-task");
+                if (createTask) {
+                    let popupContainer = document.querySelector("#popup-container")
+                    createTask.addEventListener("click",function() {
+                        let popup = popupContainer.children[0]
+                        openPopup(popupContainer,popup)
+                    })
 
-                let taskButton = document.getElementById("submit-task")
-                taskButton.addEventListener("click",function() {
-                    sendTaskData("add new task")
-                })
-            } //creates popup for task
+                    let taskButton = document.getElementById("submit-task")
+                    taskButton.addEventListener("click",function() {
+                        sendTaskData("add new task")
+                    })
+                } //creates popup for task
+            }
             
-            let createNote = document.querySelector("#create-note");
-            if (createNote) {
-                let popupContainer = document.querySelector("#popup-container")
-                createNote.addEventListener("click",function() {
-                    let popup = popupContainer.children[0]
-                    openPopup(popupContainer,popup)
-                })
+            if (current_tab == "notes") {
+                let createNote = document.querySelector("#create-note");
+                if (createNote) {
+                    let popupContainer = document.querySelector("#popup-container")
+                    createNote.addEventListener("click",function() {
+                        let popup = popupContainer.children[0]
+                        openPopup(popupContainer,popup)
+                    })
 
-                let notesButton = document.getElementById("submit-note")
-                notesButton.addEventListener("click",function() {
-                    sendTaskData("add new note")
-                    // displayNewNotes("cum")
-                    // closePopup(popupContainer)
-                })
-            } //create popup for notes
+                    let notesButton = document.getElementById("submit-note")
+                    notesButton.addEventListener("click",function() {
+                        sendTaskData("add new note")
+                        // displayNewNotes("cum")
+                        // closePopup(popupContainer)
+                    })
+                } //create popup for notes
 
-            let note = document.getElementsByClassName("note")
-            
-            for (let i = 0;i<note.length;i++) {
-                note[i].addEventListener("click",function() {
-                    // console.log(this)
-                    selectNote(this)
+                let note = document.getElementsByClassName("note")
+                
+                for (let i = 0;i<note.length;i++) {
+                    note[i].addEventListener("click",function() {
+                        // console.log(this)
+                        selectNote(this)
+                    })
+                }
+
+                let noteItem = document.getElementsByClassName("note")
+                for (let i = 0;i<noteItem.length;i++) {
+                    let note = noteItem[i].children[0].innerText
+                    let x = Math.floor(Math.random() * 256);
+                    let y = 100+ Math.floor(Math.random() * 256);
+                    let z = 50+ Math.floor(Math.random() * 256);
+                    if (x && y && z > 240) {
+                        x-=20;
+                        y-=30;
+                        z-=30
+                    }
+                    let randomColor = `rgb(${x},${y},${z})`
+                    noteItem[i].style.backgroundColor = `${randomColor}`
+                } //generates a random color not white for all li notes
+
+                let searchTagButton = document.querySelector("#tag-search");
+                searchTagButton.addEventListener("click",function() {
+                    let searchTag = document.querySelector("#note-tag-input");
+                    // console.log(searchTag.value)
+                    displayTaggedNotes(searchTag.value)
+                    document.querySelector("#note-tag-input").value = ""
                 })
             }
             
@@ -239,32 +271,29 @@
                 let popupContainer = document.querySelector("#popup-container")
                 closePopup(popupContainer)
             }) //closes popup
-            let noteItem = document.getElementsByClassName("note")
-            // console.log(notes)
-            for (let i = 0;i<noteItem.length;i++) {
-                let note = noteItem[i].children[0].innerText
-                // var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
-                let x = Math.floor(Math.random() * 256);
-                let y = 100+ Math.floor(Math.random() * 256);
-                let z = 50+ Math.floor(Math.random() * 256);
-                if (x && y && z > 240) {
-                    x-=20;
-                    y-=30;
-                    z-=30
-                }
-                let randomColor = `rgb(${x},${y},${z})`
-                noteItem[i].style.backgroundColor = `${randomColor}`
-                // console.log(noteItem[i].style.backgroundColor)
-                // console.log(note)
-            }
 
-            let searchTagButton = document.querySelector("#tag-search");
-            searchTagButton.addEventListener("click",function() {
-                let searchTag = document.querySelector("#note-tag-input");
-                // console.log(searchTag.value)
-                displayTaggedNotes(searchTag.value)
-                document.querySelector("#note-tag-input").value = ""
-            })
+            // let noteItem = document.getElementsByClassName("note")
+            // for (let i = 0;i<noteItem.length;i++) {
+            //     let note = noteItem[i].children[0].innerText
+            //     let x = Math.floor(Math.random() * 256);
+            //     let y = 100+ Math.floor(Math.random() * 256);
+            //     let z = 50+ Math.floor(Math.random() * 256);
+            //     if (x && y && z > 240) {
+            //         x-=20;
+            //         y-=30;
+            //         z-=30
+            //     }
+            //     let randomColor = `rgb(${x},${y},${z})`
+            //     noteItem[i].style.backgroundColor = `${randomColor}`
+            // } //generates a random color not white for all li notes
+
+            // let searchTagButton = document.querySelector("#tag-search");
+            // searchTagButton.addEventListener("click",function() {
+            //     let searchTag = document.querySelector("#note-tag-input");
+            //     // console.log(searchTag.value)
+            //     displayTaggedNotes(searchTag.value)
+            //     document.querySelector("#note-tag-input").value = ""
+            // })
         }
     </script>
 </footer>

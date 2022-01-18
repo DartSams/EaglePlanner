@@ -347,6 +347,17 @@ textarea{
     align-items: center;
 }
 
+#calendar-container #calendar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 30vw;
+    height: 5vh;
+}
+
+/* #calendar-container #calendar-header button {
+    margin:0px 20% 0px 20%
+} */
 
 
 #calendar-container #month {
@@ -354,15 +365,15 @@ textarea{
     flex-wrap: wrap;
     justify-content: space-around;
     list-style-type: none;
-    width:80vw;
+    width:90vw;
     height: 80vh;
     background-color: red;
     padding:5px
 }
 
 #calendar-container #month #day {
-    width:8vw;
-    height: 12vh;
+    width:10vw;
+    height: 15vh;
     background-color: #1e90ff;
-    padding: 5px;
+    padding: 3px;
 }

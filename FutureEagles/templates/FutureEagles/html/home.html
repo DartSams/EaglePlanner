@@ -192,9 +192,13 @@
     </div>
 {% endblock %}
 
-<!-- {% block calendar_container %}
+{% block calendar_container %}
     <div id="calendar-container">
-        <div id="calendar-header">Jan 2022</div>
+        <div id="calendar-header">
+            <div id="prev-month"><button>❮</button></div>
+            <div id="current-month-year">Jan 2022</div>
+            <div id="next-month"><button>❯</button></div>
+        </div>
         <div id="days-container">
             <ul id="month">
                 <li id="day">
@@ -237,4 +241,19 @@
             </ul>
         </div>
     </div>
-{%endblock%} -->
+
+    <div id="popup-container">
+        <div class="popup" id="note-popup">
+            <div class="popup-header"><button>X</button></div>
+            <div class="popup-body">
+                <label for="new-note-tag">Tag:</label>
+                <input type="text" id="new-note-tag" value="#">
+            </div>
+            <div class="popup-footer">
+                <textarea name="new-note" id="new-note" cols="30" rows="10"></textarea>
+                <br>
+                <button id="submit-note">Enter</button>
+            </div>
+        </div>
+    </div>
+{%endblock%}
