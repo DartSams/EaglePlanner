@@ -1,12 +1,10 @@
 
 const dropContentList = {
     "Edit":"edit task",
-    // "Change status":"change task status",
     "Delete":"delete task"
 }
 const url = "ws://localhost:8000/ws/FutureEagles/"
 const socket = new WebSocket(url);
-
 const Months = {
     1:"January",
     2:"February",
@@ -61,8 +59,6 @@ function showMobileNav() {
 
 
 function openPopup (container,popup,note) {
-    // console.log(container)
-    // console.log(popup)
     container.style.display = "flex"
     if (popup.id == "list-popup" ) {
         popup.style.cssText = `
@@ -81,7 +77,6 @@ function openPopup (container,popup,note) {
 } //opens popup conainer recieved from function parameter
 
 function closePopup (container) {
-    // console.log(container)
     container.style.display = "none"
     if (container.className == "popup-to-delete") {
         container.remove()
@@ -97,11 +92,7 @@ function closePopup (container) {
 
 
 socket.onopen = function(event) {
-    console.log("sockets started")
-    console.log('connection is open')
-    console.log(event)
     socket.send('Thanks for connecting')
-
     // for(let i=0;i<=100;i++){
     //     displayNewNote("lorem ipsum") //test the limits of creating notes using js dom using automatic data of 100 notes
     //     // displayNewTask("sleep","now") //test the limits of creating task using js dom using automatic data of 100 task
@@ -110,16 +101,12 @@ socket.onopen = function(event) {
 
 socket.onmessage = function(event) {
     console.log('message is recieved')
-    // console.log(event['data'])
-    // getMe(event['data'])
-    // up(event['data'])
     data = event['data']
-    // console.log(data)
 } //when server sends data to frontend
 
 socket.onclose = function(event) {
     console.log('connection is closed')
-} //
+} 
 
 // socket.onerror = function(event) {
 //     console.log(event)
@@ -127,17 +114,13 @@ socket.onclose = function(event) {
 
 
 sendTaskData=function(message) {
-    // console.log("tester")
     let popupContainer = document.querySelector("#popup-container")
     let user = document.querySelector('.profile-user').innerText
     let user_id = document.querySelector('.profile-user').id
     if (message == "add new task") {
-        // user = document.querySelector('.profile-user').innerText
-        // user_id = document.querySelector('.profile-user').id
         task=document.querySelector('#new-task').value
         taskDate=document.querySelector('#task-date').value
         socket.send([message,user,user_id,task,taskDate])
-        // console.log(message,user,user_id,task,taskDate)
         closePopup(popupContainer)
         displayNewTask(task,taskDate)
     } else if (message == "add new note") {
@@ -193,29 +176,11 @@ function displayNewTask(task,taskDate) {
     } //creates settings button
     let dropdownContent = document.createElement("div");
     dropdownContent.id = "dropdown-content"
-    // dropContentList = ["link 1","link 2","link 3"]
-    // for (let j = 0;j<=dropContentList.length-1;j++) {
-    //     let dropdownLink = document.createElement("a");
-    //     dropdownLink.innerText = dropContentList[j]
-    //     console.log(dropContentList[j])
-    //     dropdownContent.appendChild(dropdownLink)
-    // }
 
-
-    // dropContentList = {
-    //     "link 1":"first",
-    //     "link 2":"second",
-    //     "link 3":"third"
-    // }
     for (const key in dropContentList) {
         let dropdownLink = document.createElement("a");
         dropdownLink.innerText = key
         dropdownLink.id = `${dropContentList[dropdownLink.innerText]},${task},${profile.id}` //sets dropdown item element id to object key and gets the current list item index
-        // dropdownLink.id = JSON.stringify({
-        //     "backend task":dropContentList[dropdownLink.innerText],
-        //     "task id":li.id,
-        //     "task":task
-        // })
         dropdownLink.addEventListener("click",function(){
             console.log(dropdownLink.id)
             testSocket(dropdownLink.id) 
@@ -231,8 +196,6 @@ function displayNewTask(task,taskDate) {
 } //apends new task to task container
 
 function editTaskPopup(data) {
-    // console.log(data)
-
     const prevData = `${data[1]},${data[2]},${data[3]},${data[4]},${data[5]}`
     const splitPrevData = prevData.split(",")
 
@@ -284,7 +247,6 @@ function editTaskPopup(data) {
     statusInputNonActive.id = "non active"
     statusInputNonActive.value = "non active"
     statusInputNonActive.name = "status"
-    // statusInputNonActive.checked = true
     let nonactiveLabel = document.createElement("label");
     nonactiveLabel.innerText = "deactivate"
     nonactiveLabel.htmlFor = "non active"
@@ -363,7 +325,6 @@ function displayNewNote(note,tag) {
         z-=30
     }
     let randomColor = `(${x},${y},${z})`
-    // var randomColor = Math.floor(Math.random()*16777215).toString(16); //genereates a random hex color
     console.log(note)
     let notesList = document.querySelector("#notes-list")
     let noteItem = document.createElement("li");
@@ -371,13 +332,11 @@ function displayNewNote(note,tag) {
     noteItem.style.cssText = `
         background-color:${randomColor}
     `
-    // noteItem.style.backgroundColor = "red"
     let preText = document.createElement("pre");
     preText.innerText = note
 
     noteItem.append(preText)
     notesList.prepend(noteItem)
-    // document.querySelector("#new-note").value = ""
 } //creates new notes list item with a random background color
 
 function displayTaggedNotes(tag) {
@@ -386,13 +345,11 @@ function displayTaggedNotes(tag) {
     if (tag != "all") {
         let noteListReset = document.querySelector("#notes-list").children;
         for (let i = 0;i<noteListReset.length;i++) {
-            // console.log(noteList[i].id)
             noteListReset[i].style.display = ""
         } //this is to reset all notes display
 
         let noteList = document.querySelector("#notes-list").children;
         for (let i = 0;i<noteList.length;i++) {
-            // console.log(noteList[i].id)
             if (noteList[i].id != `${tag}`) {
                 noteList[i].style.display = "none"
             }
@@ -400,7 +357,6 @@ function displayTaggedNotes(tag) {
     } else {
         let noteListReset = document.querySelector("#notes-list").children;
         for (let i = 0;i<noteListReset.length;i++) {
-            // console.log(noteList[i].id)
             noteListReset[i].style.display = ""
         } //this is to reset all notes display
     }
@@ -458,9 +414,6 @@ function selectNote(element) {
 
 
 function editNotePopup(data) {
-    // console.log(data)
-
-
     let centerDiv = document.querySelector("#center")
 
     let popupContainer = document.createElement("div");;
@@ -486,9 +439,7 @@ function editNotePopup(data) {
     
     let popupFooter = document.createElement("div");
     popupFooter.id = "popup-footer"
-    // let taskInput = document.createElement("input")
-    // taskInput.id = "new-task-input"
-    // taskInput.value = splitPrevData[0]
+
     let noteTagInput = document.createElement("input");
     noteTagInput.id = "edited-tag-input"
     noteTagInput.value = data[3]
@@ -497,9 +448,6 @@ function editNotePopup(data) {
     textareaInput.id = "edit-note-input"
     textareaInput.type = "date"
     textareaInput.value = data[2]
-    // console.log(splitPrevData[1].id)
-
-
 
     let saveButton = document.createElement("button")
     saveButton.innerHTML = "Save"
@@ -508,7 +456,6 @@ function editNotePopup(data) {
         saveNoteData(data)
         closePopup(popupContainer)
         window.location.reload()
-        // console.log(data)
     })
 
     
@@ -529,9 +476,7 @@ function editNotePopup(data) {
     openPopup(popupContainer,popup)
 } //creates a new popup div to edit currently selected task
 
-function saveNoteData(prevData) {
-    // console.log(`Split data: ${prevData}`)
-    
+function saveNoteData(prevData) {    
     const newDataJSON = {
         "user":prevData[0],
         "user id":prevData[1],
@@ -554,25 +499,6 @@ function getDaysInMonth(month,year) {
 };
 
 function createMonth(monthHolder,dayHolder,tasks) {
-    // let tasks = ["play games","sleep"]
-    // console.log(month)
-    // console.log(dayHolder)
-    // console.log(tasks[0])
-    // x = JSON.parse(`"${tasks}"`)
-    console.log(monthHolder)
-    console.log(tasks)
-    for (let key in tasks) {
-        month = key.replace("'","").split("-")
-        day = key.slice(0,-1).split("-")
-        // console.log(day[1])
-        if (01 == monthHolder[0]) {
-            console.log("dump")
-        }
-        console.log(parseInt(month[0]))
-        // console.log(day)
-    }
-
-
     let centerDiv = document.querySelector("#center")
     let calendarContainer = document.createElement("div");
     calendarContainer.id = "calendar-container"
@@ -602,8 +528,6 @@ function createMonth(monthHolder,dayHolder,tasks) {
         createMonth(monthHolder+1,getDaysInMonth(monthHolder+1,2022),tasks)
     })
 
-
-
     let dayContainer = document.createElement("div");
     dayContainer.id = "days-container"
     let ulDays = document.createElement("ul");
@@ -612,7 +536,6 @@ function createMonth(monthHolder,dayHolder,tasks) {
     for (let i=1;i<=dayHolder;i++) {
         let liDay = document.createElement("li");
         liDay.id = "day"
-        // liDay.innerText = "1"
 
         let dayNum = document.createElement("div");
         dayNum.id = "day-number"
@@ -623,16 +546,14 @@ function createMonth(monthHolder,dayHolder,tasks) {
         for (let key in tasks) {
             month = key.replace("'","").split("-")
             day = key.slice(0,-1).split("-")
-            // console.log(day)
             if (i == day[1] &&  Months[monthHolder] == Months[parseInt(month[0])] ) {
-                // dayNum.innerText = "dump"
                 let task = document.createElement("div");
                 task.innerText = tasks[key]
                 dayTask.append(task)
             } else {
                 dayNum.innerText = i
             }
-        } //if
+        } 
         liDay.append(dayNum)
         liDay.append(dayTask)
         ulDays.append(liDay)

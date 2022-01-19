@@ -32,15 +32,8 @@
             {% block notes_container %}
             {% endblock %}
 
-
-        
-
-
         {% endif%}
-
-
     </div>
-
 
 </body>
 <footer>
@@ -49,17 +42,12 @@
         let current_tab = "{{tab|safe}}"
         let tasks = "{{ tasks|safe }}".replace("[","").replace("]","").split(",")
         let due_date = "{{due_date|safe}}".replace("[","").replace("]","").replace(" ","").split(",")
-        // console.log(due_date)
         let taskDict = {}
         for (let i = 0;i<tasks.length;i++) {
             taskDict[due_date[i]] = tasks[i]
-            // console.log(due_date[i])
         }
-        // console.log(taskDict)
         
-
-        let x = new Date()
-        // console.log(x)
+        let today = new Date()
         function getDaysInMonth(month,year) {
             // Here January is 1 based
             //Day 0 is the last day in the previous month
@@ -67,18 +55,6 @@
             // Here January is 0 based
             // return new Date(year, month+1, 0).getDate();
         };
-
-        // for (let i = 1;i<=12;i++) {
-        //     console.log(getDaysInMonth(i,2022))
-        // } //returns the max number of days in all 12 months
-
-        if (current_tab == "calendar") {
-            createMonth(x.getMonth()+1,getDaysInMonth(x.getMonth(),2022),taskDict)
-        }
-        
-
-
-
 
         //sign into google
         function onSignIn(googleUser) {
@@ -223,9 +199,7 @@
                         sendTaskData("add new task")
                     })
                 } //creates popup for task
-            }
-            
-            if (current_tab == "notes") {
+            } else if (current_tab == "notes") {
                 let createNote = document.querySelector("#create-note");
                 if (createNote) {
                     let popupContainer = document.querySelector("#popup-container")
@@ -273,36 +247,22 @@
                     displayTaggedNotes(searchTag.value)
                     document.querySelector("#note-tag-input").value = ""
                 })
+            } else if (current_tab == "calendar") {
+                createMonth(today.getMonth()+1,getDaysInMonth(today.getMonth(),2022),taskDict)
+                // for (let i = 1;i<=12;i++) {
+                //     console.log(getDaysInMonth(i,2022))
+                // } //returns the max number of days in all 12 months
             }
             
-            let closePopupButton = document.querySelector(".popup-header").children[0]
-            closePopupButton.addEventListener("click",function() {
+            
+            if (document.querySelector("#popup-container")) {
+                let closePopupButton = document.querySelector(".popup-header").children[0]
+                closePopupButton.addEventListener("click",function() {
                 let popupContainer = document.querySelector("#popup-container")
                 closePopup(popupContainer)
             }) //closes popup
-
-            // let noteItem = document.getElementsByClassName("note")
-            // for (let i = 0;i<noteItem.length;i++) {
-            //     let note = noteItem[i].children[0].innerText
-            //     let x = Math.floor(Math.random() * 256);
-            //     let y = 100+ Math.floor(Math.random() * 256);
-            //     let z = 50+ Math.floor(Math.random() * 256);
-            //     if (x && y && z > 240) {
-            //         x-=20;
-            //         y-=30;
-            //         z-=30
-            //     }
-            //     let randomColor = `rgb(${x},${y},${z})`
-            //     noteItem[i].style.backgroundColor = `${randomColor}`
-            // } //generates a random color not white for all li notes
-
-            // let searchTagButton = document.querySelector("#tag-search");
-            // searchTagButton.addEventListener("click",function() {
-            //     let searchTag = document.querySelector("#note-tag-input");
-            //     // console.log(searchTag.value)
-            //     displayTaggedNotes(searchTag.value)
-            //     document.querySelector("#note-tag-input").value = ""
-            // })
+            }
+            
         }
     </script>
 </footer>

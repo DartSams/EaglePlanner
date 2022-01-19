@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse,JsonResponse
 from .models import Job,Google_user,Note
 from django.views.decorators.csrf import csrf_exempt
-import json
 
 # Create your views here.
 @csrf_exempt
@@ -17,14 +16,10 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
             if tab in ["tasks","calendar"]:
                 user_jobs = Job.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search job db
                 data["user_task"] = user_jobs
-                # ss = {}
+
                 data["tasks"] = [i.task for i in user_jobs]
                 data["due_date"] = [i.due_date[5:] for i in user_jobs]
-                # # data["tasks"] = ss
-                # for each in user_jobs:
-                #     # c=each.due_date.split("-")
-                #     ss["s"] = each.task
-                # # data["tasks"] = ss
+
 
             elif tab =="notes":
                 n = Note.objects.filter(user=request.session["logged-in-user"],user_id=request.session["logged-in-user-id"]) #search note db
@@ -42,7 +37,6 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
         return render(request,"FutureEagles/html/home.html",data)
 
     else:
-        # print(request.POST)
         data_message = request.POST.get("data message")
         profile = request.POST.get("user")
         profile_id = request.POST.get("ID")
@@ -71,34 +65,4 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
                 new_task = Job(user=profile,user_id=profile_id,task="default",due_date="today",status="active")
                 new_task.save()
 
-        # if data_message == "sign in":
-        #     profile = request.POST.get("user")
-        #     profile_id = request.POST.get("ID")
-        #     profile_image = request.POST.get("profile image")
-        #     profile_email = request.POST.get("email")
-        #     user = Google_user(profile_name=profile,user_id=profile_id,user_image=profile_image,user_email=profile_email)
-        #     user.save()
-        #     # print(f"User: {user}")
-        #     request.session["logged-in-user"] = profile
-        #     request.session["logged-in-user-id"] = profile_id
-        #     print(f"Currently logged in as {request.session['logged-in-user']}")
-
-        # elif data_message == "create account":
-        #     profile = request.POST.get("user")
-        #     profile_id = request.POST.get("ID")
-        #     profile_image = request.POST.get("profile image")
-        #     profile_email = request.POST.get("email")
-        #     user = Google_user(profile_name=profile,user_id=profile_id,user_image=profile_image,user_email=profile_email)
-        #     user.save()
-
-        # if data_message == "signing out":
-        #     request.session["logged-in-user"] = ""
-        #     request.session["logged-in-user-id"] = ""
-        #     print(f"signing out")
-
-
         return redirect("index")
-
-#TODO
-    #next start on calendar app
-    #fix js using switches instead of if/else if statements
