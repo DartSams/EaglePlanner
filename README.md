@@ -1,21 +1,15 @@
 # EaglePlanner
 
-<p> 
-    <img src="design/calendar preview.png">
-    <img src="design/task preview.png">
-    <img src="design/notes preview.png">
-</p>
-
-
-## Features 
-- Calendar of current year
-- Creating tasks
-- Creating notes
 
 ## Overview
 - Are you a student that would like to plan their day to day activities then EaglePlanner might be for you.
 - After signing in with your google account users can create task/activites with their individual dates
 - Users can also create sticky notes for any occasion
+
+## Features 
+- Calendar of current year
+- Creating tasks
+- Creating notes
 
 ## Calendar
 <p> 
@@ -46,5 +40,5 @@
 * [<b>Google OAuth2</b>](https://developers.google.com/identity/sign-in/web/sign-in) - To sign into google accounts.
 
 ## Content for future updates
-- When creating task assign task to multiple days
+- When creating task ability to assign to multiple days
 
