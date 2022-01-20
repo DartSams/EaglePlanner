@@ -11,6 +11,7 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
             "tab":tab
         }
         request.session["logged-in-user"] = " "
+        request.session["logged-in-user-id"] = " "
         note_tags=[]
         if request.session["logged-in-user"]:
             if tab in ["tasks","calendar"]:
