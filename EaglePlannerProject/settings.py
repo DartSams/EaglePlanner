@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-11bk+$n4=rr5bl&bz1du$6(!!8#tmw8-a$k$+llkqs&h6j)z44
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','eagleplanner.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','studenteagleplanner.herokuapp.com']
 
 
 # Application definition
