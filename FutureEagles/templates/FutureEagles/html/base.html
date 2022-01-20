@@ -22,13 +22,13 @@
     {% endblock %}
 
     <div id="center">
-        {% if tab == "tasks" and current_user %}
+        {% if tab == "tasks" and current_user != "" %}
             {% block task_container %}
             {% endblock %}
 
 
 
-        {% elif tab == "notes" and current_user %}
+        {% elif tab == "notes" and current_user != "" %}
             {% block notes_container %}
             {% endblock %}
 
@@ -42,6 +42,7 @@
 <footer>
     <script>
         let current_user = "{{current_user|safe}}";
+        console.log(current_user)
         let current_tab = "{{tab|safe}}"
         let tasks = "{{ tasks|safe }}".replace("[","").replace("]","").split(",")
         let due_date = "{{due_date|safe}}".replace("[","").replace("]","").replace(" ","").split(",")
@@ -49,7 +50,7 @@
         for (let i = 0;i<tasks.length;i++) {
             taskDict[due_date[i]] = tasks[i]
         }
-        
+        console.log(taskDict)
         let today = new Date()
         function getDaysInMonth(month,year) {
             // Here January is 1 based
@@ -133,7 +134,10 @@
                 success:function(response){
                     let taskList = "{{user_task|safe}}"
                     // console.log(taskList)
-                    if ("<QuerySet []>" == taskList) {
+                    // console.log(taskDict)
+                    // console.log(Object.entries(taskDict)[2])
+                    // console.log(current_user)
+                    if (current_user == "") {
                         window.location.reload()
                     } //reloads the page when signing in IMPORTANT if removed when there will be no get request to fetch the task from db
                 },
@@ -166,6 +170,7 @@
             auth2.signOut().then(function () {
                 auth2.disconnect();
                 document.location='http://localhost:8000/';
+                window.location.reload()
             });
 
             document.getElementById("profile-div").remove()
@@ -203,6 +208,7 @@
                     })
                 } //creates popup for task
             } else if (current_tab == "notes") {
+                taskDict["notes"] = "test"
                 let createNote = document.querySelector("#create-note");
                 if (createNote) {
                     let popupContainer = document.querySelector("#popup-container")

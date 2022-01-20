@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv #to get env variables for db connection
-# from django import django_heroku
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +28,7 @@ SECRET_KEY = 'django-insecure-11bk+$n4=rr5bl&bz1du$6(!!8#tmw8-a$k$+llkqs&h6j)z44
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','studenteagleplanner.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','eagleplanner.herokuapp.com']
 
 
 # Application definition
@@ -84,7 +83,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Django_DB',
-        'HOST': 'us-cdbr-east-04.cleardb.com',
+        'HOST': 'localhost',
         'PORT': '3306',
         'USER': os.environ.get("mysql_user"),
         'PASSWORD': os.environ.get("mysql_password"),
@@ -137,7 +136,3 @@ STATICFILES_DIRS=[
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staic')
-# Activate Django-Heroku.
-# django_heroku.settings(locals())

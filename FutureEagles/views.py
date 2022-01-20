@@ -8,10 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request,tab="tasks"): #defaults the tab to a empty string if user doesnt pass in a proper tab name such as notes,tasks,calendar
     if request.method == "GET":
         data={
+            "current_user":request.session["logged-in-user"],
             "tab":tab
         }
-        request.session["logged-in-user"] = " "
-        request.session["logged-in-user-id"] = " "
         note_tags=[]
         if request.session["logged-in-user"]:
             if tab in ["tasks","calendar"]:
@@ -31,8 +30,6 @@ def index(request,tab="tasks"): #defaults the tab to a empty string if user does
 
             elif tab not in ["tasks","notes","calendar"]:
                 print("not a valid tab page")
-
-            data["current_user"] = request.session["logged-in-user"]
 
         else:
             print(f"User not logged in.")

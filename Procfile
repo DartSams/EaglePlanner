@@ -1,1 +1,1 @@
-web: gunicorn EaglePlannerProject.wsgi
+web: gunicorn CCMS.wsgi --log-file -
