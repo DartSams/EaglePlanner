@@ -90,14 +90,20 @@ DATABASES = {
     }
 }
 
+rediss = "rediss://:p1473f7073ba547b22ddd44408b2008562dbac0f477fb40428576c21f97f0b73d@ec2-3-215-65-234.compute-1.amazonaws.com:24400"
+redis = "redis://:p1473f7073ba547b22ddd44408b2008562dbac0f477fb40428576c21f97f0b73d@ec2-3-215-65-234.compute-1.amazonaws.com:24399"
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL')],
+            "hosts": [rediss],
         },
     },
 }
+
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
