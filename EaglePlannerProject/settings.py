@@ -92,13 +92,22 @@ DATABASES = {
 
 rediss = "rediss://:p1473f7073ba547b22ddd44408b2008562dbac0f477fb40428576c21f97f0b73d@ec2-3-215-65-234.compute-1.amazonaws.com:24400"
 redis = "redis://:p1473f7073ba547b22ddd44408b2008562dbac0f477fb40428576c21f97f0b73d@ec2-3-215-65-234.compute-1.amazonaws.com:24399"
+import ssl
+
+ssl_context = ssl.SSLContext()
+ssl_context.check_hostname = False
+
+heroku_redis_ssl_host = {
+    'address': rediss,  # The 'rediss' schema denotes a SSL connection.
+    'ssl': ssl_context
+}
 
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [os.environ.get("REDIS_TLS_URL")],
-        },
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': (heroku_redis_ssl_host,)
+        }
     },
 }
 
