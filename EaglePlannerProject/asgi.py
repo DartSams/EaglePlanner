@@ -16,23 +16,13 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 # application = get_asgi_application()
 
 
+from email.mime import application
 import os
 import channels
 import django
+from channels.routing import get_default_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EaglePlannerProject.settings")
 django.setup()
 
-from django.core.asgi import get_asgi_application
-from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
-import EaglePlannerProject.routing
-
-application = ProtocolTypeRouter({
-  "http": get_asgi_application(),
-  "websocket": AuthMiddlewareStack(
-        URLRouter(
-            EaglePlannerProject.routing.application
-        )
-    ),
-})
+application = get_default_application()
