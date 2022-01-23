@@ -1,1 +1,1 @@
-web: gunicorn EaglePlannerProject.wsgi
+web: daphne -b 0.0.0.0 -p $PORT EaglePlannerProject.asgi:application
