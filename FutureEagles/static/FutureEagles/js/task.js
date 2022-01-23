@@ -3,7 +3,7 @@ const settingsDropdownContentList = {
     "Edit":"edit task",
     "Delete":"delete task"
 }
-const url = "ws://localhost:8000/ws/FutureEagles/"
+const url = "ws://eagleplanner.herokuapp.com/ws/FutureEagles/"
 const socket = new WebSocket(url);
 const Months = {
     1:"January",
