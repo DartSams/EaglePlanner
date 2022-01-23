@@ -6,7 +6,7 @@ const settingsDropdownContentList = {
 // const url = "ws://eagleplanner.herokuapp.com/ws/FutureEagles/"
 // const url =  'wss://' + '.herokuapp.com' + '/ws/FutureEagles/'
 // const url = (window.location.protocol === 'https:' ? 'wss' : 'ws') + '://'
-const url = "wss://" + window.location.host + "/ws/FutureEagles/"
+const url = "ws://" + window.location.host + "/ws/FutureEagles/"
 const socket = new WebSocket(url);
 const Months = {
     1:"January",
