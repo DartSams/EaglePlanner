@@ -6,8 +6,16 @@ const settingsDropdownContentList = {
 // const url = "ws://eagleplanner.herokuapp.com/ws/FutureEagles/"
 // const url =  'wss://' + '.herokuapp.com' + '/ws/FutureEagles/'
 // const url = (window.location.protocol === 'https:' ? 'wss' : 'ws') + '://'
-const url = "wss://" + window.location.host + "/ws/FutureEagles/"
-const socket = new WebSocket(url);
+// const url = "wss://" + window.location.host + "/ws/FutureEagles/"
+var loc = window.location;
+var wsStart = 'ws://';
+if (loc.protocol == 'https:') {
+     wsStart = 'wss://'
+}
+// var endpoint = wsStart + 'your_ip_address:port_given_to_daphne_server' + '/ws/home';
+// For above command, it look like this
+var endpoint = wsStart + window.location.host + '/ws/FutureEagles/';
+const socket = new WebSocket(endpoint);
 const Months = {
     1:"January",
     2:"February",
