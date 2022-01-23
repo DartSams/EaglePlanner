@@ -1,5 +1,5 @@
 
-const dropContentList = {
+const settingsDropdownContentList = {
     "Edit":"edit task",
     "Delete":"delete task"
 }
@@ -83,8 +83,10 @@ function closePopup (container) {
         return
     } // important to stop creating many popup containers will delete edit popup container from html
     // let popupContainer = document.querySelector("#new-note").value = ""
-    else if (container.children[2].id == "note-popup") {
+    else if (container.children.id == "note-popup") {
         document.querySelector("#new-note").value = ""
+    } else {
+        container.style.display = "none"
     }
 } //closes popup conainer recieved from function parameter
 
@@ -177,10 +179,10 @@ function displayNewTask(task,taskDate) {
     let dropdownContent = document.createElement("div");
     dropdownContent.id = "dropdown-content"
 
-    for (const key in dropContentList) {
+    for (const key in settingsDropdownContentList) {
         let dropdownLink = document.createElement("a");
         dropdownLink.innerText = key
-        dropdownLink.id = `${dropContentList[dropdownLink.innerText]},${task},${profile.id}` //sets dropdown item element id to object key and gets the current list item index
+        dropdownLink.id = `${settingsDropdownContentList[dropdownLink.innerText]},${task},${profile.id}` //sets dropdown item element id to object key and gets the current list item index
         dropdownLink.addEventListener("click",function(){
             console.log(dropdownLink.id)
             testSocket(dropdownLink.id) 

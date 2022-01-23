@@ -82,8 +82,8 @@ ASGI_APPLICATION = 'EaglePlannerProject.routing.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Django_DB',
-        'HOST': 'localhost',
+        'NAME': 'eagleplanner_db',
+        'HOST': '35.222.182.160',
         'PORT': '3306',
         'USER': os.environ.get("mysql_user"),
         'PASSWORD': os.environ.get("mysql_password"),
