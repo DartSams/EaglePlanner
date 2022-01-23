@@ -32,7 +32,7 @@ application = ProtocolTypeRouter({
   "http": get_asgi_application(),
   "websocket": AuthMiddlewareStack(
         URLRouter(
-            EaglePlannerProject.routing.websocket_urlpatterns
+            EaglePlannerProject.routing.application
         )
     ),
 })
