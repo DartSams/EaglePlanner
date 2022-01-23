@@ -1,1 +1,1 @@
-web: daphne -b 0.0.0.0 -p $PORT EaglePLannerProject.asgi:application
+web: daphne -b $HOST -p $PORT EaglePlannerProject.asgi:application
