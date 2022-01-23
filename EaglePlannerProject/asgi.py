@@ -20,7 +20,7 @@ import os
 import channels
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "therapist_portal.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EaglePlannerProject.settings")
 django.setup()
 
 from django.core.asgi import get_asgi_application
