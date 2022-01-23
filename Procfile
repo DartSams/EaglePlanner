@@ -1,1 +1,1 @@
-web: daphne -b 0.0.0.0 -p $PORT EaglePlannerProject.asgi:application
+web: daphne FutureEagles.asgi:application --port $PORT --bind 0.0.0.0 -v2

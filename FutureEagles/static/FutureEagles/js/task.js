@@ -4,7 +4,8 @@ const settingsDropdownContentList = {
     "Delete":"delete task"
 }
 // const url = "ws://eagleplanner.herokuapp.com/ws/FutureEagles/"
-const url =  'wss://' + window.location.host + '/ws/FutureEagles/'
+// const url =  'wss://' + window.location.host + '/ws/FutureEagles/'
+const url = (window.location.protocol === 'https:' ? 'wss' : 'ws') + '://'
 const socket = new WebSocket(url);
 const Months = {
     1:"January",
@@ -111,9 +112,9 @@ socket.onclose = function(event) {
     console.log('connection is closed')
 } 
 
-// socket.onerror = function(event) {
-//     console.log(event)
-// }
+socket.onerror = function(event) {
+    console.log(event)
+}
 
 
 sendTaskData=function(message) {
